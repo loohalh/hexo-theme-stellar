@@ -6,8 +6,6 @@
 
 从一篇文章开始。以后想加项目文档、专栏或笔记，仍然在同一个站点里写。
 
-![Stellar 的轻博客、经典博客、个人知识库和项目文档](https://xaoxuu.com/wiki/stellar/assets/screenshots/v2/stellar-four-sites.webp)
-
 [创建第一个博客](https://xaoxuu.com/wiki/stellar/start/install/) · [蓝图与展示墙](https://xaoxuu.com/wiki/stellar/support/examples/) · [完整文档](https://xaoxuu.com/wiki/stellar/)
 
 > Stellar v2 已进入 Beta 开发阶段，尚未发布。Beta 是开发里程碑，不代表 npm 版本；公开文档目前统一说明 v2。
@@ -42,12 +40,12 @@
 
 ## 选择一个起点
 
-| 示例 | 适合什么样的站点 | 在线预览 |
-| --- | --- | --- |
-| 留白 · Light Blog | 安静写长文、随笔和生活记录 | [打开](https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog/) |
-| 星迹 · Blog | 使用经典侧栏整理文章、分类与专栏 | [打开](https://xaoxuu.github.io/hexo-theme-stellar-examples/blog/) |
-| 个人知识库 · Knowledge | 把博客、项目资料和长期主题放在一起 | [打开](https://xaoxuu.github.io/hexo-theme-stellar-examples/knowledge/) |
-| 项目文档 · Docs | 给一个项目维护清晰的文档目录 | [打开](https://xaoxuu.github.io/hexo-theme-stellar-examples/docs/) |
+| 示例 | 适合什么样的站点 |
+| --- | --- |
+| 留白 · Light Blog | 安静写长文、随笔和生活记录 |
+| 星迹 · Blog | 使用经典侧栏整理文章、分类与专栏 |
+| 个人知识库 · Knowledge | 把博客、项目资料和长期主题放在一起 |
+| 项目文档 · Docs | 给一个项目维护清晰的文档目录 |
 
 示例源码在 [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/)。
 
@@ -62,7 +60,7 @@ node: '>= 22'
 npm: '>= 10'
 ```
 
-### 体验 v2 Beta
+### 体验 v2 版本
 
 在博客根目录添加主题源码并安装依赖：
 

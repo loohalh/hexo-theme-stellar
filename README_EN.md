@@ -4,8 +4,6 @@
 
 Stellar can begin as a quiet personal blog and grow into a home for your articles, project documentation, series, and notes.
 
-![Four real Stellar sites: a light blog, a classic blog, a personal knowledge base, and project documentation](https://xaoxuu.com/wiki/stellar/assets/screenshots/v2/stellar-four-sites.webp)
-
 [See the examples](https://xaoxuu.com/wiki/stellar/support/examples/) · [Getting started](https://xaoxuu.com/wiki/stellar/start/install/) · [Chinese documentation](https://xaoxuu.com/wiki/stellar/)
 
 > Stellar v2 is currently in Beta development and has not been released. “Beta” describes the development milestone, not the version available from npm.
@@ -33,16 +31,16 @@ Stellar includes content components for notes, folding sections, tabs, galleries
 
 ## Choose a starting point
 
-| Example | A good fit for | Preview |
-| --- | --- | --- |
-| Light Blog | Essays, personal notes, and distraction-free reading | [Open](https://xaoxuu.github.io/hexo-theme-stellar-examples/lightblog/) |
-| Blog | A classic sidebar blog with categories and series | [Open](https://xaoxuu.github.io/hexo-theme-stellar-examples/blog/) |
-| Knowledge | A personal site combining articles and long-lived knowledge | [Open](https://xaoxuu.github.io/hexo-theme-stellar-examples/knowledge/) |
-| Docs | Documentation for a single project | [Open](https://xaoxuu.github.io/hexo-theme-stellar-examples/docs/) |
+| Example | A good fit for |
+| --- | --- |
+| Light Blog | Essays, personal notes, and distraction-free reading |
+| Blog | A classic sidebar blog with categories and series |
+| Knowledge | A personal site combining articles and long-lived knowledge |
+| Docs | Documentation for a single project |
 
 The source for all four sites lives in [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/).
 
-## Try the v2 Beta
+## Try the v2 version
 
 You need Node.js 22 or newer and Hexo 8 or newer. In the root of an existing Hexo site:
 
