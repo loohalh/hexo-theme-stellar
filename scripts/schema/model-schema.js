@@ -304,7 +304,7 @@ function footerSchema(factory, options = {}) {
       example: "CC BY-NC-SA 4.0"
     }),
     share: field(["boolean", "array", "null"], {
-      default: options.shareDefault || inherited("hexo.stellar.config.article.footer.share"),
+      default: options.shareDefault || computed("普通博客继承 article.footer.share；Wiki/Topic 默认关闭，Notebook 使用 notebook.footer.share；Collection 与 Page 可覆盖"),
       example: true
     }),
     showTags: field(["boolean", "null"], { default: inherited("hexo.stellar.config.article.footer.showTags"), example: true })

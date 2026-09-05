@@ -902,7 +902,7 @@ function buildWikiCollectionModel(input, collectionId) {
     layers: [collectionRegions]
   });
   const globalArticle = articlePresentationDefaults(content);
-  const globalFooter = articleFooterDefaults(content);
+  const globalFooter = { ...articleFooterDefaults(content), share: [] };
 
   return {
     id: collectionId,
@@ -997,7 +997,7 @@ function buildTopicCollectionModel(input, collectionId, currentId) {
     layers: [collectionRegions]
   });
   const globalArticle = articlePresentationDefaults(content);
-  const globalFooter = articleFooterDefaults(content);
+  const globalFooter = { ...articleFooterDefaults(content), share: [] };
 
   return {
     id: collectionId,

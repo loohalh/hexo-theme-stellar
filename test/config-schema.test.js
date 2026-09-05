@@ -30,7 +30,7 @@ test("Theme config loads complete frozen defaults", () => {
   assert.equal(config.topbar.brand.style, undefined);
   assert.equal(config.leftbar.brand.style, "regular");
   assert.deepEqual(config.article.footer.share, SHARE_SERVICE_IDS);
-  assert.equal(config.notebook.footer.share, null);
+  assert.deepEqual(config.notebook.footer.share, []);
   assertDeepFrozen(config);
 });
 

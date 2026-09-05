@@ -146,16 +146,6 @@ test("Article PageViewModels preserve registered share service order", () => {
   }
 });
 
-test("Article PageViewModels enable all registered share services by default", () => {
-  for (const [build, input] of [
-    [buildPostPageViewModel, postInput()],
-    [buildWikiPageViewModel, wikiInput()],
-    [buildNotebookPageViewModel, notebookInput()]
-  ]) {
-    assert.deepEqual(build(input).render.article.footer.share.services, SHARE_SERVICE_IDS);
-  }
-});
-
 test("Article PageViewModels defensively filter unknown share services", () => {
   for (const [build, input] of [
     [buildPostPageViewModel, postInput()],
