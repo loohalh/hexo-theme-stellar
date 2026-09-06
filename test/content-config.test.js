@@ -227,6 +227,26 @@ test("Content config rejects 1.44 fields with current migration targets", () => 
     () => parsePageConfig({ wiki: "docs" }, "page.md"),
     /wiki 已移除，期望 collection\.id/
   );
+  assert.throws(
+    () => parseCollectionConfig({ name: "Docs", available: "Web" }, "collection.yml"),
+    /available 已移除，期望 audience/
+  );
+  assert.throws(
+    () => parseCollectionConfig({ name: "Docs", coverpage: true }, "collection.yml"),
+    /coverpage 已移除，期望 hero\.enabled/
+  );
+  assert.throws(
+    () => parsePageConfig({ comment_id: "thread" }, "page.md"),
+    /comment_id 已移除，期望 comments\.id/
+  );
+  assert.throws(
+    () => parseCollectionConfig({ name: "Docs", sort: 10 }, "collection.yml"),
+    /sort 已移除，期望 listing\.order/
+  );
+  assert.throws(
+    () => parsePageConfig({ giscus: { "data-repo": "owner\/repo" } }, "page.md"),
+    /giscus 已移除，期望 comments\.options/
+  );
 });
 
 test("Content footer share accepts only registered service IDs", () => {
