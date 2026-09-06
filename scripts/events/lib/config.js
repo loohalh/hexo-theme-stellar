@@ -32,5 +32,4 @@ module.exports = ctx => {
   // merge icons: 简单覆盖合并
   const themeIcons = ctx.render.renderSync({ path: path.join(ctx.theme_dir, "_data/icons.yml"), engine: "yaml" });
   runtimeData.icons = Object.assign({}, themeIcons, data.icons || {});
-  runtimeData.chatUsers = data.chat_users;
 };

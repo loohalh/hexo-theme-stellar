@@ -5,7 +5,6 @@
 // container
 hexo.extend.tag.register('tabs', require('./lib/tabs')(hexo), true)
 hexo.extend.tag.register('box', require('./lib/box')(hexo), true)
-hexo.extend.tag.register('about', require('./lib/about')(hexo), true)
 hexo.extend.tag.register('folding', require('./lib/folding')(hexo), true)
 hexo.extend.tag.register('folders', require('./lib/folders')(hexo), true)
 hexo.extend.tag.register('grid', require('./lib/grid')(hexo), true)
@@ -15,7 +14,6 @@ hexo.extend.tag.register('banner', require('./lib/banner')(hexo), true)
 hexo.extend.tag.register('dropdown', require('./lib/dropdown')(hexo), true)
 
 // data
-hexo.extend.tag.register('users', require('./lib/friends')(hexo))
 hexo.extend.tag.register('friends', require('./lib/friends')(hexo))
 hexo.extend.tag.register('albums', require('./lib/albums')(hexo))
 hexo.extend.tag.register('posters', require('./lib/posters')(hexo))

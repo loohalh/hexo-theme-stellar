@@ -130,7 +130,6 @@ module.exports = deepFreeze({
       friends: { js: "/js/services/friends.js" },
       friends_and_posts: { js: "/js/services/friends_and_posts.js" },
       timeline: { js: "/js/services/timeline.js" },
-      fcircle: { js: "/js/services/fcircle.js" },
       weibo: { js: "/js/services/weibo.js" },
       memos: { js: "/js/services/memos.js" },
       voice: { js: "/js/plugins/voice.js" },

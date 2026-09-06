@@ -18,8 +18,7 @@ test("主题数据与构建派生对象只写入 hexo.stellar.data", () => {
     theme_dir: ROOT,
     locals: { get: key => key === "data" ? {
       icons: { custom: "<svg>custom</svg>" },
-      widgets: { recent: { limit: 3 } },
-      chat_users: { bot: { name: "Bot" } }
+      widgets: { recent: { limit: 3 } }
     } : null },
     render: {
       renderSync({ path: file }) {
@@ -35,7 +34,6 @@ test("主题数据与构建派生对象只写入 hexo.stellar.data", () => {
   assert.equal(ctx.theme.config, themeConfig);
   assert.deepEqual(ctx.stellar.data.widgets, { recent: { limit: 3 }, toc: {} });
   assert.deepEqual(ctx.stellar.data.icons, { default: "<svg>default</svg>", custom: "<svg>custom</svg>" });
-  assert.deepEqual(ctx.stellar.data.chatUsers, { bot: { name: "Bot" } });
   assert.deepEqual(ctx.config.pretty_urls, { trailing_index: false, trailing_html: false });
 });
 
@@ -65,6 +63,6 @@ test("运行时消费者不再读取 theme.config 派生数据", () => {
     return entries;
   }).join("\n");
 
-  assert.doesNotMatch(source, /(?:ctx\.|hexo\.|this\.)?theme\.config\.(?:icons|widgets|authors|default_author|links|chat_users|wiki|topic|notebooks)/);
+  assert.doesNotMatch(source, /(?:ctx\.|hexo\.|this\.)?theme\.config\.(?:icons|widgets|authors|default_author|links|wiki|topic|notebooks)/);
   assert.doesNotMatch(source, /theme\.(?:icons|widgets|authors|default_author|wiki|topic|notebooks)/);
 });

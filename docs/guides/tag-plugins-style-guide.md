@@ -23,7 +23,7 @@
 
 | 家族 | 典型标签 | 主要特征 |
 | --- | --- | --- |
-| 容器类 | `tabs`、`box`、`about`、`folding`、`folders`、`grid`、`gallery`、`banner` | 通常带 `content`，内部可继续渲染 Markdown 或子标签 |
+| 容器类 | `tabs`、`box`、`folding`、`folders`、`grid`、`gallery`、`banner` | 通常带 `content`，内部可继续渲染 Markdown 或子标签 |
 | 数据类 | `friends`、`albums`、`sites`、`ghcard`、`timeline`、`toc`、`chat`、`md` | 依赖站点配置、本地数据或远程接口，部分标签会联动前端服务 |
 | 表达类 | `note`、`button`、`link`、`mark`、`emoji`、`hashtag`、`mbti`、`okr`、`rating`、`vote` | 以静态展示为主，强调 HTML 结构与样式表达 |
 | 阅读类 | `reel`、`paper` | 单独放在 `scripts/tags/lib/read/` 与 `source/css/_components/tag-plugins/read/` |
@@ -121,7 +121,6 @@
 现有仓库中存在一些合理例外，新增标签时可参考，但不应把例外当作默认模式：
 
 - `radio` 复用 `checkbox` 的实现与样式，说明“同构语义的小变体”可以共享底层代码
-- `users` 是 `friends` 的别名注册，说明对外语法可以保留兼容入口，但内部应尽量收敛到同一实现
 - `box` 复用了 `note` 的基础结构，说明同族组件可以建立在已有模式上，而不必完全复制一份
 - `blockquote` 的样式文件名不是同名文件，`video` 走 `media.styl`，说明样式映射可以存在例外，但新增场景优先遵循同名映射
 - `inline-labels.js` 直接注册多个轻量标签，说明极简内联标签不必强行拆成一文件一标签
@@ -155,7 +154,7 @@
 | --- | --- | --- | --- | --- |
 | `note` / `box` | `scripts/tags/lib/note.js`、`scripts/tags/lib/box.js` | `tag-plugins/note.styl` | 无 | 展示类卡片，优先走 `tags.note` |
 | `tabs` / `folding` / `folders` | `scripts/tags/lib/*.js` | `tag-plugins/tabs.styl`、`folding.styl`、`folders.styl` | 无 | 容器类，关注嵌套结构与 Markdown 渲染 |
-| `friends` / `users` / `albums` / `sites` | `scripts/tags/lib/*.js` | `friends.styl`、`sites.styl` 等 | `source/js/services/sites.js` 等 | 数据类，常联动本地配置或远程接口 |
+| `friends` / `albums` / `sites` | `scripts/tags/lib/*.js` | `friends.styl`、`sites.styl` 等 | `source/js/services/sites.js` 等 | 数据类，常联动本地配置或远程接口 |
 | `rating` / `vote` / `timeline` | `scripts/tags/lib/*.js` | `rating.styl`、`vote.styl`、`timeline.styl` | `source/js/services/rating.js` 等 | 运行时增强类，优先占位后补全 |
 | `mbti` / `okr` / `mark` / `button` | `scripts/tags/lib/*.js` | 同名 `.styl` | 一般无 | 表达类，强调结构清晰与主题风格一致 |
 | `reel` / `paper` | `scripts/tags/lib/read/*.js` | `tag-plugins/read/*.styl` | 无 | 阅读类，使用子目录组织 |
