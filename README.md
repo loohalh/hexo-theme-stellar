@@ -8,7 +8,7 @@
 
 [创建第一个博客](https://xaoxuu.com/wiki/stellar/start/install/) · [蓝图与展示墙](https://xaoxuu.com/wiki/stellar/support/examples/) · [完整文档](https://xaoxuu.com/wiki/stellar/)
 
-> Stellar v2 已进入 Beta 开发阶段，尚未发布。Beta 是开发里程碑，不代表 npm 版本；公开文档目前统一说明 v2。
+> Stellar v2 当前版本为 `2.0.0-rc.1`；是否已经公开发布，以 npm 页面和 GitHub Releases 为准。
 
 [![npm](https://img.shields.io/npm/v/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
 [![license](https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar/blob/main/LICENSE)
@@ -60,12 +60,12 @@ node: '>= 22'
 npm: '>= 10'
 ```
 
-### 体验 v2 版本
+### 使用最新源码
 
 在博客根目录添加主题源码并安装依赖：
 
 ```bash
-git submodule add https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+git submodule add -b main https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
 npm install --prefix themes/stellar
 ```
 

@@ -93,7 +93,7 @@ flowchart LR
 
 ## 缓存策略
 
-request/cache 是主题运行时实现策略，由 `scripts/lib/internal-constants.js` 集中所有，不再暴露 `extensions.cache` 站点配置。构建期把冻结 policy 写入 Runtime Manifest，ESM request/cache 客户端必须显式消费该 policy，提供 GET 并发去重、超时重试、fresh 命中、stale 失败回退、单条 200 KiB 限制和按最旧时间淘汰；非 GET、`no-store` 与时间戳破坏参数不缓存。
+request/cache 是主题运行时实现策略，由 `scripts/lib/internal-constants.js` 集中所有，不暴露站点缓存配置。构建期把冻结 policy 写入 Runtime Manifest，ESM request/cache 客户端必须显式消费该 policy，提供 GET 并发去重、超时重试、fresh 命中、stale 失败回退、单条 200 KiB 限制和按最旧时间淘汰；非 GET、`no-store` 与时间戳破坏参数不缓存。
 
 缓存前缀为 `Stellar.request-cache.v2.`。客户端不替换 `window.fetch` 或 `XMLHttpRequest`，只在自身请求开始/结束时派发 `stellar:request-start/end`。`utils.request` / `requestWithoutLoading` 是迁移期数据服务 callback/loading 适配，不再包含第二份缓存算法。
 

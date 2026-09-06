@@ -195,35 +195,35 @@ Stellar 支持四套并行内容系统，各有独立的页面类型与导航模
 
 | 系统 | 列表页 | 内容页 | 主要特性 |
 |------|--------|--------|----------|
-| **博客** | `index_blog` | `post` | 分类、标签、分页、相关文章 |
-| **文档（wiki）** | `index_wiki` | `wiki` | 项目树、小节、层级导航 |
-| **专栏（topic）** | `index_topic` | `topic` | 系列文章、沉浸式阅读 |
-| **笔记本** | `notebooks` → `notes` | `note` | 标签树导航、轻量笔记 |
+| **博客** | `blog_index` | `post` | 分类、标签、分页、相关文章 |
+| **文档（Wiki）** | `wiki_index` | `wiki` | Collection 树、小节、层级导航 |
+| **专栏（Topic）** | Collection 列表 | `topic` | 系列文章、沉浸式阅读 |
+| **笔记本** | `notebook_index` → `note_index` | `note` | 标签树导航、轻量笔记 |
 
 ```mermaid
 graph TB
-    subgraph MenuBar["Navigation Menu (menubar)"]
-        MENU1["Post button<br/>menu_id: post"]
-        MENU2["Wiki button<br/>menu_id: wiki"]
-        MENU3["Notebooks button<br/>menu_id: notebooks"]
+    subgraph Menu["Region Menu (leftbar.menu / topbar.menu)"]
+        MENU1["Blog link<br/>active_menu: post"]
+        MENU2["Wiki link<br/>active_menu: wiki"]
+        MENU3["Notebook link<br/>active_menu: notebooks"]
     end
     
     subgraph BlogSystem["Blog System"]
-        BLOGINDEX["index_blog layout<br/>Post list with nav_tabs"]
-        BLOGPOST["post layout<br/>Article with metadata"]
-        BLOGTOPIC["topic layout<br/>Topic/column page"]
+        BLOGINDEX["blog_index profile<br/>Post list with listing_nav"]
+        BLOGPOST["post profile<br/>Article with metadata"]
+        BLOGTOPIC["topic profile<br/>Topic Collection"]
     end
     
     subgraph WikiSystem["Wiki System"]
-        WIKIINDEX["index_wiki layout<br/>Project list"]
-        WIKIPAGE["wiki layout<br/>Documentation page"]
-        WIKITREE["wiki.tree config<br/>Project structure"]
+        WIKIINDEX["wiki_index profile<br/>Collection list"]
+        WIKIPAGE["wiki profile<br/>Documentation page"]
+        WIKITREE["navigation.tree<br/>Collection structure"]
     end
     
     subgraph NotebookSystem["Notebook System"]
-        NBLIST["notebooks layout<br/>Notebook list"]
-        NOTELIST["notes layout<br/>Note list for notebook"]
-        NOTEPAGE["note layout<br/>Individual note"]
+        NBLIST["notebook_index profile<br/>Notebook list"]
+        NOTELIST["note_index profile<br/>Note list"]
+        NOTEPAGE["note profile<br/>Individual note"]
     end
     
     MENU1 --> BLOGINDEX
@@ -360,7 +360,7 @@ flowchart TD
 
 Stellar 通过 npm 以 `hexo-theme-stellar` 分发，采用 MIT 协议开源。
 
-完整 Blueprint 已迁移到独立的 [Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples) 仓库。四套示例分别作为可下载、可预览和可独立运行的新站方案；主题包只保留 `stellar doctor` 与 `stellar new note`，不再携带示例内容或注册 init。Blueprint 不进入页面运行时，也不会成为新的配置根。
+完整 Blueprint 已迁移到独立的 [Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples) 仓库。仓库按目录维护当前可下载、可预览和可独立运行的新站方案；主题包只保留 `stellar doctor` 与 `stellar new note`，不再携带示例内容或注册 init。Blueprint 不进入页面运行时，也不会成为新的配置根。
 
 **参考源码**：[package.json](../../../package.json)、[ci/check-package-integration.js](../../../ci/check-package-integration.js)、[scripts/commands/stellar.js](../../../scripts/commands/stellar.js)、[scripts/lib/theme-metadata.js](../../../scripts/lib/theme-metadata.js)、[README.md](../../../README.md)、[Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples)
 

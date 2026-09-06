@@ -33,6 +33,7 @@ Runtime Manifest 内置 Extension、Feature 和 selector 组件由 [contribution
 
 | ID | 默认 | 用途 |
 |----|------|------|
+| `color_scheme_switch` | disabled | 设置页与系统偏好驱动的明暗模式切换 |
 | `lazy_loading` | 始终启用 | 图片懒加载的 `transition/auto_aspect_ratio` 行为 |
 | `link_prefetch` | enabled | Flying Pages 链接预取 |
 | `lightbox` | enabled | Fancybox 图片灯箱 |

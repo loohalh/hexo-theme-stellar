@@ -6,7 +6,7 @@ Stellar can begin as a quiet personal blog and grow into a home for your article
 
 [See the examples](https://xaoxuu.com/wiki/stellar/support/examples/) · [Getting started](https://xaoxuu.com/wiki/stellar/start/install/) · [Chinese documentation](https://xaoxuu.com/wiki/stellar/)
 
-> Stellar v2 is currently in Beta development and has not been released. “Beta” describes the development milestone, not the version available from npm.
+> The current Stellar v2 version is `2.0.0-rc.1`. Check npm and GitHub Releases for its public availability.
 
 [![npm](https://img.shields.io/npm/v/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
 [![license](https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar/blob/main/LICENSE)
@@ -38,14 +38,14 @@ Stellar includes content components for notes, folding sections, tabs, galleries
 | Knowledge | A personal site combining articles and long-lived knowledge |
 | Docs | Documentation for a single project |
 
-The source for all four sites lives in [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/).
+The source for these sites lives in the catalog-driven [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/) repository.
 
-## Try the v2 version
+## Use the latest source
 
 You need Node.js 22 or newer and Hexo 8 or newer. In the root of an existing Hexo site:
 
 ```bash
-git submodule add https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+git submodule add -b main https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
 npm install --prefix themes/stellar
 ```
 
@@ -62,7 +62,7 @@ npx hexo stellar doctor
 npx hexo generate
 ```
 
-The full v2 documentation is currently maintained in Chinese. The example repository provides an English quick start and four complete sites that can be explored without reading the whole reference.
+The full v2 documentation is currently maintained in Chinese. The example repository provides an English quick start and complete runnable sites that can be explored without reading the whole reference.
 
 ## Stable npm release
 

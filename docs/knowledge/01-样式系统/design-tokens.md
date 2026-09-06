@@ -139,8 +139,8 @@ surface 只改变背景、阴影与文字层级；list/grid、variant、density 
 - 仅服务于构建期计算的值，使用 Stylus 变量；
 - 算法中间值、动画帧和一次性实验值留在实现中，不扩展令牌表。
 
-例如 `$c-theme`、`$border-card` 和 `$gap-base` 是可复用设计令牌；Galaxy 的 `params` 是功能参数，不应混入全局样式令牌；`stellar.galaxy.mountAll(canvases)` 是行为复用入口，应通过接口复用而不是复制挂载逻辑。
+例如 `$c-theme`、`$border-card` 和 `$gap-base` 是可复用设计令牌；Wiki Hero 的 effect options 是功能参数，不应混入全局样式令牌；效果加载与生命周期应复用共享注册表和对应 ESM 模块，不复制挂载逻辑。
 
 ## 事实来源与维护
 
-当前默认值以 `source/css/_custom.styl` 和 `_config.yml` 为准。本文只解释公共令牌的语义和使用边界。修改令牌后同步更新本文及受影响的布局契约，并运行 `python3 docs/knowledge/tools/verify.py`。
+当前默认值以 `source/css/_custom.styl` 和 `_config.yml` 为准。本文只解释公共令牌的语义和使用边界。修改令牌后同步更新本文及受影响的布局契约，并运行 `npm run knowledge:check`。
