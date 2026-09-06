@@ -21,7 +21,7 @@
 - Article 与 Notebook 的列表、横幅、许可、分享、标签和排序默认值收敛到内容模型；Collection 内容默认关闭分享，Notebook 与其它 Collection 使用一致的覆盖规则。
 - 侧栏集合、Navbar、Dropdown、Grid、文章卡片、下载按钮和 Topbar 对齐使用统一的 UI capability、形状与状态反馈。
 - 运行环境升级为 Node.js 22+、Hexo 8+；构建、包集成、性能、知识库、贡献注册表和复用规则各自拥有独立门禁。
-- 发布流程原子同步 `package.json`、`package-lock.json` 与安装知识库的版本，并把未跟踪文件纳入工作区门禁，避免候选包、锁文件或临时产物漂移；所有公开版本使用同一个 npm 安装入口。
+- 发布流程原子同步 `package.json`、`package-lock.json` 与安装知识库的版本，并把未跟踪文件纳入工作区门禁，避免候选包、锁文件或临时产物漂移；稳定版写入 npm `latest`，RC 写入 `rc` dist-tag。
 - 主题仓库只保留长期指南、当前知识库和阶段审计；单次方案、迁移中间态及已被最终实现取代的测试／兼容残留不进入发布文件树。
 
 ### 升级注意（配置变更与破坏性改动）

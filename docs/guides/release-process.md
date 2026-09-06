@@ -88,7 +88,7 @@ npm run release:dry -- 1.34.1
 - push 事件仅当 head commit message 以 `release: ` 开头时执行发布，否则跳过（防止误发布）
 - `ci/prepare-release.js` 读取检出分支的版本文件与 CHANGELOG，复用 `release.js` 的版本一致性校验和章节解析；版本、锁文件、安装知识库或日志无效时在发布前失败
 - 已发布版本自动跳过
-- npm publish 使用 Trusted Publishing（OIDC + provenance）和默认 npm 安装入口
+- npm publish 使用 Trusted Publishing（OIDC + provenance）；稳定版显式写入 `latest` dist-tag，RC 写入 `rc` dist-tag，避免候选版本替换无版本安装入口
 - 发布成功后创建纯版本号 tag（如 `1.34.1`，无 `v` 前缀）
 - 随后创建 GitHub Release：正文从 `CHANGELOG.md` 提取对应版本段落；release 已存在则跳过；正文只使用已校验的 CHANGELOG 章节
 

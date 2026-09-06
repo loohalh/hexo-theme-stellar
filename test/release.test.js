@@ -182,6 +182,7 @@ test('发布工作流复用本地版本校验与 CHANGELOG 解析，拒绝缺失
   assert.deepEqual(prepareReleaseMetadata(root), {
     version: '1.42.1',
     notes: '### 修复\n- 内容',
+    npmTag: 'latest',
   });
   fs.writeFileSync(changelog, '## 1.42.1\n> 发布日期：2026-09-03\n');
   assert.throws(() => prepareReleaseMetadata(root), /非空章节/);
@@ -190,4 +191,14 @@ test('发布工作流复用本地版本校验与 CHANGELOG 解析，拒绝缺失
   assert.throws(() => prepareReleaseMetadata(root), /package-lock\.json 的根版本与 package\.json 不一致/);
   fs.writeFileSync(files.package, '{"version":"2.0.0-alpha.1"}');
   assert.throws(() => prepareReleaseMetadata(root), /版本号格式不正确/);
+});
+
+test('发布元数据为 RC 选择 rc dist-tag', (t) => {
+  const { root } = createVersionFixture(t, {
+    package: '{"version":"2.0.0-rc.1"}\n',
+    packageLock: '{"version":"2.0.0-rc.1","packages":{"":{"version":"2.0.0-rc.1"}}}\n',
+    knowledge: 'Version: 2.0.0-rc.1\n',
+  });
+  fs.writeFileSync(path.join(root, 'CHANGELOG.md'), '## 2.0.0-rc.1\n### 新功能\n- 内容\n');
+  assert.equal(prepareReleaseMetadata(root).npmTag, 'rc');
 });
