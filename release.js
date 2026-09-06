@@ -8,7 +8,7 @@
  *   1. 解析版本号与参数（--dry-run / --yes / --help）
  *   2. 校验版本号格式、当前分支、工作区状态
  *   3. 校验 CHANGELOG.md 已包含该版本非空章节（内容由 AI/人工提前准备），否则终止
- *   4. 准备 package.json 与安装知识库的最终版本内容
+ *   4. 准备 package.json、package-lock.json 与安装知识库的最终版本内容
  *   5. 在最终待提交状态执行质量检查
  *   6. 输出变更摘要与 diff，正式模式执行前二次确认
  *   7. dry-run、取消或质量检查失败时从内存恢复文件，不依赖 git checkout --
@@ -26,9 +26,10 @@ const ROOT = __dirname;
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-(?:alpha|beta|rc)\.\d+)?$/;
 const RELEASE_VERSION_RE = /^\d+\.\d+\.\d+(?:-rc\.\d+)?$/;
 const CHANGELOG_FILE = "CHANGELOG.md";
+const PACKAGE_LOCK_FILE = "package-lock.json";
 const INSTALLATION_FILE = "docs/knowledge/00-总览与安装配置/installation.md";
-const WORKSPACE_ALLOWED_FILES = new Set(["package.json", CHANGELOG_FILE]);
-const MANAGED_FILES = ["package.json", CHANGELOG_FILE, INSTALLATION_FILE];
+const MANAGED_FILES = ["package.json", PACKAGE_LOCK_FILE, CHANGELOG_FILE, INSTALLATION_FILE];
+const WORKSPACE_ALLOWED_FILES = new Set(MANAGED_FILES);
 const WORKFLOW_URL = 'https://github.com/xaoxuu/hexo-theme-stellar/actions/workflows/npm-publish.yml';
 
 function usage() {
@@ -84,17 +85,28 @@ function currentBranch() {
 }
 
 function checkWorkspace() {
-  const changed = runGit(['diff', '--name-only', 'HEAD'])
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean);
+  const changed = workspaceChangedFiles();
   const extra = changed.filter((file) => !WORKSPACE_ALLOWED_FILES.has(file));
   if (extra.length > 0) {
     fail(
-      '工作区存在无关改动（含已暂存与未暂存），请先提交或暂存后再发版：\n' +
+      '工作区存在无关改动（含已暂存、未暂存与未跟踪文件），请先处理后再发版：\n' +
         extra.map((file) => `  ${file}`).join('\n')
     );
   }
+}
+
+function workspaceChangedFiles(root = ROOT) {
+  const commands = [
+    ['diff', '--name-only', 'HEAD'],
+    ['ls-files', '--others', '--exclude-standard'],
+  ];
+  const changed = commands.flatMap((args) =>
+    execFileSync('git', args, { cwd: root, encoding: 'utf8' })
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean)
+  );
+  return [...new Set(changed)].sort();
 }
 
 function changeSummary() {
@@ -151,18 +163,49 @@ function updatedInstallation(raw, previousVersion, version) {
   };
 }
 
+function updatedPackageLock(raw, previousVersion, version) {
+  let lock;
+  try {
+    lock = JSON.parse(raw);
+  } catch (_) {
+    throw new Error("package-lock.json 解析失败，请检查文件格式");
+  }
+  if (lock.version !== previousVersion || lock.packages?.[""]?.version !== previousVersion) {
+    throw new Error(`package-lock.json 的根版本与 package.json 不一致（预期 ${previousVersion}）`);
+  }
+  lock.version = version;
+  lock.packages[""].version = version;
+  return `${JSON.stringify(lock, null, 2)}\n`;
+}
+
+function validateVersionFiles(root) {
+  const packageRaw = fs.readFileSync(path.join(root, "package.json"), "utf8");
+  const version = packageVersion(packageRaw);
+  updatedPackageLock(fs.readFileSync(path.join(root, PACKAGE_LOCK_FILE), "utf8"), version, version);
+  const installation = updatedInstallation(
+    fs.readFileSync(path.join(root, INSTALLATION_FILE), "utf8"),
+    version,
+    version
+  );
+  return { version, knowledgeReferences: installation.knowledgeReplacements };
+}
+
 function prepareVersionFiles(root, version) {
   assertReleaseVersion(version);
   const packagePath = path.join(root, "package.json");
+  const packageLockPath = path.join(root, PACKAGE_LOCK_FILE);
   const installationPath = path.join(root, INSTALLATION_FILE);
   const packageRaw = fs.readFileSync(packagePath, "utf8");
+  const packageLockRaw = fs.readFileSync(packageLockPath, "utf8");
   const installationRaw = fs.readFileSync(installationPath, "utf8");
   const previousVersion = packageVersion(packageRaw);
   const packageContent = updatedPackageJson(packageRaw, previousVersion, version);
+  const packageLockContent = updatedPackageLock(packageLockRaw, previousVersion, version);
   const installation = updatedInstallation(installationRaw, previousVersion, version);
 
   const updates = new Map([
     [packagePath, packageContent],
+    [packageLockPath, packageLockContent],
     [installationPath, installation.content],
   ]);
   for (const [file, content] of updates) {
@@ -398,4 +441,6 @@ module.exports = {
   hasNonEmptyChangelogSection,
   releaseNotes,
   prepareVersionFiles,
+  validateVersionFiles,
+  workspaceChangedFiles,
 };
