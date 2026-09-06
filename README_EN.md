@@ -1,79 +1,102 @@
-# Stellar — a blog that can grow with your work
+<div align="center">
+  <img src="assets/icon-v2-x512.webp" width="160" alt="Stellar">
+  <h1>Stellar</h1>
+  <p>A blog that grows with your work</p>
+  <p>A complete, versatile, and feature-rich personal knowledge base designed to grow over time.</p>
+  <p><a href="README_EN.md">English</a> · <a href="README.md">简体中文</a></p>
+  <p>
+    <a href="https://github.com/xaoxuu/hexo-theme-stellar/releases"><img src="https://img.shields.io/github/v/release/xaoxuu/hexo-theme-stellar" alt="release"></a>
+    <a href="https://www.npmjs.com/package/hexo-theme-stellar"><img src="https://img.shields.io/npm/v/hexo-theme-stellar" alt="npm"></a>
+    <a href="https://www.npmjs.com/package/hexo-theme-stellar"><img src="https://img.shields.io/npm/dm/hexo-theme-stellar" alt="npm downloads"></a>
+    <a href="https://github.com/xaoxuu/hexo-theme-stellar"><img src="https://img.shields.io/github/stars/xaoxuu/hexo-theme-stellar" alt="stars"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar" alt="license"></a>
+  </p>
+  <p>
+    <a href="https://xaoxuu.com/wiki/stellar/start/install/">Create your first blog</a> ·
+    <a href="https://xaoxuu.com/wiki/stellar/support/examples/">Site examples</a> ·
+    <a href="https://xaoxuu.com/wiki/stellar/">Documentation</a>
+  </p>
+</div>
 
-[English](README_EN.md) · [简体中文](README.md)
+## Bring order to everything you publish
 
-Stellar can begin as a quiet personal blog and grow into a home for your articles, project documentation, series, and notes.
+> True simplicity is not just subtraction; it is creating order within complexity.
 
-[See the examples](https://xaoxuu.com/wiki/stellar/support/examples/) · [Getting started](https://xaoxuu.com/wiki/stellar/start/install/) · [Chinese documentation](https://xaoxuu.com/wiki/stellar/)
+### A complete system for organizing content
 
-> The current Stellar v2 version is `2.0.0-rc.1`. Check npm and GitHub Releases for its public availability.
+Start with regular posts. Give a project its own Wiki when it needs stable documentation, collect related posts into a Topic, and keep evolving knowledge in a Notebook. They share the same navigation, search, sidebars, and reading experience, while unused content systems stay out of the way.
 
-[![npm](https://img.shields.io/npm/v/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
-[![license](https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar/blob/main/LICENSE)
-[![stars](https://img.shields.io/github/stars/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar)
-[![npm downloads](https://img.shields.io/npm/dm/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
+### Flexible layout and expression
 
-## Four kinds of content, one site
+From appearance presets, colors, and type to columns, tabs, folding sections, and galleries, you can shape both the site and the way its content is presented. Local search can take readers directly to a matching section, while responsive layouts leave the main space to the article on narrow screens.
 
-Publish regular blog posts as usual. Give a project its own Wiki when it needs stable navigation. Keep a series of posts together as a Topic, or collect smaller pieces of knowledge in a Notebook.
+### Static pages that stay fresh
 
-They share the same navigation, search, sidebars, and reading experience. If all you need is a blog, the other systems stay out of the way.
+Your writing preserves ideas while external data stays current. Remote content, community data, and external services can load on demand without being coupled to the static article, so frequently changing data does not require a full-site rebuild.
 
-## A static site with room for live data
+## Site examples
 
-Timelines, link status, remote README files, GitHub repositories and contributors, ratings, and polls can load when they are needed. Your site remains static, while frequently changing data does not require a full rebuild.
+[Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/) provides runnable sites you can explore before replacing their content and configuration at your own pace. Visit [Site examples](https://xaoxuu.com/wiki/stellar/support/examples/) for more real sites.
 
-The article remains readable when a remote service is unavailable.
+## Get started
 
-## Writing, finding, and reading belong together
+### Requirements
 
-Stellar includes content components for notes, folding sections, tabs, galleries, timelines, chat, tables, and more. Built-in local search can take a reader straight to a matching section. On smaller screens, navigation moves into drawers and leaves the page to the article.
+- Node.js 22 or newer
+- Hexo 8 or newer
 
-## Choose a starting point
+### Create from a Blueprint
 
-| Example | A good fit for |
-| --- | --- |
-| Light Blog | Essays, personal notes, and distraction-free reading |
-| Blog | A classic sidebar blog with categories and series |
-| Knowledge | A personal site combining articles and long-lived knowledge |
-| Docs | Documentation for a single project |
+With Git and npm available, launch the interactive Blueprint installer with one command:
 
-The source for these sites lives in the catalog-driven [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/) repository.
+```bash
+sh -c "$(curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.sh)"
+```
 
-## Use the latest source
+The installer reads the example repository's [`blueprints.json`](https://github.com/xaoxuu/hexo-theme-stellar-examples/blob/main/blueprints.json), presents the available Blueprints, then confirms the Blueprint, project directory, dependency installation, and creation plan.
 
-You need Node.js 22 or newer and Hexo 8 or newer. In the root of an existing Hexo site:
+### Install from npm
+
+Install the default version currently provided by npm, then confirm what was installed:
+
+```bash
+npm install hexo-theme-stellar
+npm ls hexo-theme-stellar
+```
+
+### Follow the latest source
+
+Add the official repository's `main` branch as a submodule and install the theme's own dependencies:
 
 ```bash
 git submodule add -b main https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
 npm install --prefix themes/stellar
 ```
 
-Enable the theme in `_config.yml`:
+### Enable and check
+
+Enable the theme in your site's `_config.yml`:
 
 ```yaml
 theme: stellar
 ```
 
-Then check and build the site:
+Then run Doctor and generate the site:
 
 ```bash
 npx hexo stellar doctor
 npx hexo generate
 ```
 
-The full v2 documentation is currently maintained in Chinese. The example repository provides an English quick start and complete runnable sites that can be explored without reading the whole reference.
+See [Installation](https://xaoxuu.com/wiki/stellar/start/install/) and [Create your first site](https://xaoxuu.com/wiki/stellar/start/first-site/) for the complete workflow.
 
-## Stable npm release
+## Documentation and community
 
-```bash
-npm install hexo-theme-stellar
-```
-
-This command may still install v1. Run `npm ls hexo-theme-stellar` before using any v2 configuration.
-
-## Community
-
+- [Configure your site](https://xaoxuu.com/wiki/stellar/start/configuration/)
+- [Use content components](https://xaoxuu.com/wiki/stellar/reference/tags/)
+- [Manage Wikis, Topics, and Notebooks](https://xaoxuu.com/wiki/stellar/reference/collection/)
+- [Theme configuration reference](https://xaoxuu.com/wiki/stellar/reference/theme/)
+- [Migrate from v1 to v2](https://xaoxuu.com/wiki/stellar/migration/v1-to-v2/)
 - [Issues](https://github.com/xaoxuu/hexo-theme-stellar/issues/) for reproducible problems
 - [Discussions](https://github.com/xaoxuu/hexo-theme-stellar/discussions/) for ideas and usage questions
 - [Contributing](CONTRIBUTING.md) for code and documentation work

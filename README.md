@@ -1,81 +1,87 @@
-# Stellar - 每个人的独立博客
+<div align="center">
+  <img src="assets/icon-v2-x512.webp" width="160" alt="Stellar">
+  <h1>Stellar</h1>
+  <p>每个人的独立博客</p>
+  <p>基于 Hexo 的全能个人知识库，开箱即用，内置海量标签和动态数据组件。可用于个人博客、项目文档、知识库、专栏、笔记等。</p>
+  <p><a href="README.md">简体中文</a> · <a href="README_EN.md">English</a></p>
+  <p>
+    <a href="https://github.com/xaoxuu/hexo-theme-stellar/releases"><img src="https://img.shields.io/github/v/release/xaoxuu/hexo-theme-stellar" alt="release"></a>
+    <a href="https://www.npmjs.com/package/hexo-theme-stellar"><img src="https://img.shields.io/npm/v/hexo-theme-stellar" alt="npm"></a>
+    <a href="https://www.npmjs.com/package/hexo-theme-stellar"><img src="https://img.shields.io/npm/dm/hexo-theme-stellar" alt="npm downloads"></a>
+    <a href="https://github.com/xaoxuu/hexo-theme-stellar"><img src="https://img.shields.io/github/stars/xaoxuu/hexo-theme-stellar" alt="stars"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar" alt="license"></a>
+  </p>
+  <p>
+    <a href="https://xaoxuu.com/wiki/stellar/start/install/">创建第一个博客</a> ·
+    <a href="https://xaoxuu.com/wiki/stellar/support/examples/">站点示例</a> ·
+    <a href="https://xaoxuu.com/wiki/stellar/">完整文档</a>
+  </p>
+</div>
 
-[简体中文](README.md) · [English](README_EN.md)
+## 在纷繁中建立秩序
 
-一个博客，也是一套可以长期生长的内容系统。
+> 真正的简约不止删繁就简，而是在纷繁中建立秩序。
 
-从一篇文章开始。以后想加项目文档、专栏或笔记，仍然在同一个站点里写。
+### 完善的内容组织体系
 
-[创建第一个博客](https://xaoxuu.com/wiki/stellar/start/install/) · [蓝图与展示墙](https://xaoxuu.com/wiki/stellar/support/examples/) · [完整文档](https://xaoxuu.com/wiki/stellar/)
+从普通文章开始。项目需要稳定的文档目录时，用 Wiki；文章逐渐形成系列时，收进专栏；零散知识需要长期积累时，放进笔记本。它们共享同一套导航、搜索、侧栏与阅读体验，没有启用的内容系统不会增加额外负担。
 
-> Stellar v2 当前版本为 `2.0.0-rc.1`；是否已经公开发布，以 npm 页面和 GitHub Releases 为准。
+### 灵活的排版与表达方式
 
-[![npm](https://img.shields.io/npm/v/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
-[![license](https://img.shields.io/github/license/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar/blob/main/LICENSE)
-[![stars](https://img.shields.io/github/stars/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar)
-[![npm downloads](https://img.shields.io/npm/dm/hexo-theme-stellar)](https://www.npmjs.com/package/hexo-theme-stellar)
-[![release](https://img.shields.io/github/v/release/xaoxuu/hexo-theme-stellar)](https://github.com/xaoxuu/hexo-theme-stellar/releases)
+从外观预设、配色和字体，到分栏、选项卡、折叠块与图库，站点的样子和内容的表达方式都可以按需组合。本地搜索可以直接定位到相关章节，响应式布局会在窄屏上把主要空间留给正文。
 
-## 内容多起来，也不用推倒重来
+### 静态页面，也能常看常新
 
-普通文章照常发布。项目需要一套稳定目录时，用 Wiki；几篇文章写成了系列，收进专栏；零散知识想长期补充，放进笔记本。
+手写内容沉淀观点，外部数据保持新鲜。远程内容、社区数据和外部服务可以按需加载，与静态正文保持解耦；经常变化的数据不必每次都随整站重新生成。
 
-博客、Wiki、专栏和笔记本共享同一套导航、搜索、侧栏与阅读体验。只写博客时，其它系统不会跑出来打扰你。
+## 站点示例
 
-## 静态博客，也能放一些活的内容
+[Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/) 提供可以直接运行的示例站，适合先体验接近自己目标的站点，再逐步替换内容与配置。更多真实站点见[站点示例](https://xaoxuu.com/wiki/stellar/support/examples/)。
 
-动态时间线、自动友链、远程 README、GitHub 仓库与贡献者、评分和投票都可以按需接入。博客仍然是静态文件，但经常变化的内容不必每次都跟着整站重新部署。
-
-远程服务不会挡住正文先显示。接口暂时不可用时，文章仍然可以读。
-
-## 写作、检索和阅读是一件事
-
-提示框、折叠、标签页、图库、时间线、聊天和表格等内容组件可以互相组合。Markdown 表达不够时，不需要临时拼一套风格各异的插件。
-
-本地搜索由主题生成索引，结果可以直接落到文章章节；桌面端目录和信息栏到了手机上会变成抽屉，把位置让给正文。
-
-[内容组件](https://xaoxuu.com/wiki/stellar/reference/tags/) · [站内搜索](https://xaoxuu.com/wiki/stellar/guides/search/) · [外观与排版](https://xaoxuu.com/wiki/stellar/guides/appearance/)
-
-> 如果你只想写博客，它不会逼你理解这些系统；内容真的多起来时，它们已经在那里了。
-
-## 选择一个起点
-
-| 示例 | 适合什么样的站点 |
-| --- | --- |
-| 留白 · Light Blog | 安静写长文、随笔和生活记录 |
-| 星迹 · Blog | 使用经典侧栏整理文章、分类与专栏 |
-| 个人知识库 · Knowledge | 把博客、项目资料和长期主题放在一起 |
-| 项目文档 · Docs | 给一个项目维护清晰的文档目录 |
-
-示例源码在 [hexo-theme-stellar-examples](https://github.com/xaoxuu/hexo-theme-stellar-examples/)。
-
-## 快速开始
+## 开始使用
 
 ### 环境要求
 
-```yaml
-Hexo: '>= 8'
-hexo-cli: 4.3.0 ~ latest
-node: '>= 22'
-npm: '>= 10'
+- Node.js 22 或更高版本
+- Hexo 8 或更高版本
+
+### 从蓝图创建
+
+准备好 Git 和 npm 后，一条命令即可启动交互式蓝图安装器：
+
+```bash
+sh -c "$(curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.sh)"
 ```
 
-### 使用最新源码
+安装器会读取示例仓库的 [`blueprints.json`](https://github.com/xaoxuu/hexo-theme-stellar-examples/blob/main/blueprints.json)，展示当前可用的蓝图，并依次确认蓝图、项目目录、依赖安装和创建计划。
 
-在博客根目录添加主题源码并安装依赖：
+### 从 npm 安装
+
+在博客根目录安装 npm 当前提供的默认版本，并确认实际安装结果：
+
+```bash
+npm install hexo-theme-stellar
+npm ls hexo-theme-stellar
+```
+
+### 跟随最新源码
+
+将官方仓库的 `main` 分支添加为子模块，并安装主题自身的依赖：
 
 ```bash
 git submodule add -b main https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
 npm install --prefix themes/stellar
 ```
 
-然后在博客 `_config.yml` 中启用主题：
+### 启用并检查
+
+在博客 `_config.yml` 中启用主题：
 
 ```yaml
 theme: stellar
 ```
 
-运行 Doctor 和生成：
+然后运行 Doctor 并生成站点：
 
 ```bash
 npx hexo stellar doctor
@@ -84,29 +90,15 @@ npx hexo generate
 
 完整步骤见[环境与安装](https://xaoxuu.com/wiki/stellar/start/install/)和[创建第一个站点](https://xaoxuu.com/wiki/stellar/start/first-site/)。
 
-### 使用 npm 公开稳定版
+## 文档与社区
 
-```bash
-npm install hexo-theme-stellar
-```
-
-这条命令不保证安装到 v2。复制 v2 配置前，请先运行 `npm ls hexo-theme-stellar` 核对实际版本。
-
-## 文档
-
-- [从第一篇文章开始](https://xaoxuu.com/wiki/stellar/start/first-site/)
-- [把博客变成自己的样子](https://xaoxuu.com/wiki/stellar/start/configuration/)
-- [用 Wiki 写项目文档](https://xaoxuu.com/wiki/stellar/guides/wiki/)
-- [把文章整理成专栏](https://xaoxuu.com/wiki/stellar/guides/topic/)
-- [建立自己的笔记本](https://xaoxuu.com/wiki/stellar/guides/notebook/)
+- [配置自己的站点](https://xaoxuu.com/wiki/stellar/start/configuration/)
+- [使用内容组件](https://xaoxuu.com/wiki/stellar/reference/tags/)
+- [管理 Wiki、专栏与笔记本](https://xaoxuu.com/wiki/stellar/reference/collection/)
 - [主题配置参考](https://xaoxuu.com/wiki/stellar/reference/theme/)
 - [从 v1 迁移到 v2](https://xaoxuu.com/wiki/stellar/migration/v1-to-v2/)
-
-## 社区
-
 - [Issues](https://github.com/xaoxuu/hexo-theme-stellar/issues/)：反馈可以复现的问题
 - [Discussions](https://github.com/xaoxuu/hexo-theme-stellar/discussions/)：交流使用经验和想法
-- [蓝图与展示墙](https://xaoxuu.com/wiki/stellar/support/examples/)：看看不同的人怎样使用 Stellar
 - [贡献指南](CONTRIBUTING.md)：参与主题开发与文档维护
 
 ## 开源许可
