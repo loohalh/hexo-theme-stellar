@@ -97,13 +97,12 @@ function checkWorkspace() {
 
 function workspaceChangedFiles(root = ROOT) {
   const commands = [
-    ['diff', '--name-only', 'HEAD'],
-    ['ls-files', '--others', '--exclude-standard'],
+    ['diff', '--name-only', '-z', 'HEAD'],
+    ['ls-files', '--others', '--exclude-standard', '-z'],
   ];
   const changed = commands.flatMap((args) =>
     execFileSync('git', args, { cwd: root, encoding: 'utf8' })
-      .split('\n')
-      .map((line) => line.trim())
+      .split('\0')
       .filter(Boolean)
   );
   return [...new Set(changed)].sort();

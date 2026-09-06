@@ -113,6 +113,8 @@ test('workspaceChangedFiles 同时发现已跟踪与未跟踪文件并排除 ign
   execFileSync('git', ['init', '-q'], { cwd: root });
   fs.writeFileSync(path.join(root, '.gitignore'), '*.tmp\n');
   fs.writeFileSync(path.join(root, 'tracked.txt'), 'before\n');
+  fs.mkdirSync(path.join(root, 'docs', '知识库'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'docs', '知识库', '安装.md'), 'before\n');
   execFileSync('git', ['add', '.'], { cwd: root });
   execFileSync(
     'git',
@@ -121,10 +123,11 @@ test('workspaceChangedFiles 同时发现已跟踪与未跟踪文件并排除 ign
   );
 
   fs.writeFileSync(path.join(root, 'tracked.txt'), 'after\n');
+  fs.writeFileSync(path.join(root, 'docs', '知识库', '安装.md'), 'after\n');
   fs.writeFileSync(path.join(root, 'untracked.txt'), 'new\n');
   fs.writeFileSync(path.join(root, 'ignored.tmp'), 'ignored\n');
 
-  assert.deepEqual(workspaceChangedFiles(root), ['tracked.txt', 'untracked.txt']);
+  assert.deepEqual(workspaceChangedFiles(root), ['docs/知识库/安装.md', 'tracked.txt', 'untracked.txt']);
 });
 
 test('prepareVersionFiles 可将内部 prerelease 直接更新为对应稳定版', (t) => {
