@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.0.0-rc.1
+
+> 发布日期：2026-09-07
+
+本节记录从最近公开版本 `1.44.0` 到当前候选文件树的净变化；开发期间已经被替换的中间方案不属于迁移契约。
+
+### 新功能
+
+- 配置、Collection YAML 与页面 Front Matter 采用声明式严格 Schema；默认配置、校验、JavaScript 投影和 Reference 由同一字段事实生成，Doctor 在构建前给出带来源和字段路径的诊断。
+- 新增 Post、Topic、Wiki、Notebook、Note 与索引页共享的 Collection/PageViewModel 管线，并以 `listed/searchable` 分离聚合展示和搜索收录。
+- 页面外壳统一为 Topbar、Leftbar、Rightbar Region，Brand、Menu、Widget、Footer 和 13 个 Profile 使用结构化配置与明确的覆盖语义。
+- 新增 `card/glass/minimal/flat` 外观预设、明暗模式切换、颜色／渐变／排版／形状／背景设置，以及独立设置页。
+- 浏览器功能改为原生 ESM Runtime Manifest 和按 DOM 命中加载的 Extension；搜索、评论、Feature、数据服务及请求缓存拥有明确生命周期。
+- Wiki Hero 支持 `ferrofluid`、`galaxy`、`light-rays` 三种可选背景效果，效果与静态图片可叠加；标签目录新增 `gist`。
+- 新增 `hexo stellar doctor` 与 `hexo stellar new note`；目录驱动的完整 Blueprint 改由 Stellar Examples 仓库维护。
+
+### 行为、样式与工程变化
+
+- Article 与 Notebook 的列表、横幅、许可、分享、标签和排序默认值收敛到内容模型；Collection 内容默认关闭分享，Notebook 与其它 Collection 使用一致的覆盖规则。
+- 侧栏集合、Navbar、Dropdown、Grid、文章卡片、下载按钮和 Topbar 对齐使用统一的 UI capability、形状与状态反馈。
+- 运行环境升级为 Node.js 22+、Hexo 8+；构建、包集成、性能、知识库、贡献注册表和复用规则各自拥有独立门禁。
+- 发布流程原子同步 `package.json`、`package-lock.json` 与安装知识库的版本，并把未跟踪文件纳入工作区门禁，避免候选包、锁文件或临时产物漂移；所有公开版本使用同一个 npm 安装入口。
+- 主题仓库只保留长期指南、当前知识库和阶段审计；单次方案、迁移中间态及已被最终实现取代的测试／兼容残留不进入发布文件树。
+
+### 升级注意（配置变更与破坏性改动）
+
+- v1 的 `logo/menubar/site_tree/style/tag_plugins/plugins/data_services` 等结构不会被兼容读取；请按[公开迁移说明](https://xaoxuu.com/wiki/stellar/migration/v1-to-v2/)逐项迁移到 `topbar/leftbar/rightbar/footer/profiles/appearance/tags/features/services`。
+- Collection 与 Front Matter 需要迁移为 `collection/route/navigation/listing/visibility/banner/article/comments/render/seo` 等分组字段；未知字段、错误类型与非法枚举会在构建早期失败。
+- `about`、`users` 标签以及对应的 `chat_users.yml`、`fcircle` 适配器已移除；`tip` 改为单标签 `{% tip 词句 pop:注解 %}`，`quot` 支持直接图标键与 `color`。
+- 浏览器后处理必须原样保留 `public/js/runtime/**/*.js` 的 ESM 语义、相对 import 与 JavaScript MIME 类型。
+- v2 当前源码从仓库 `main` 安装并需要执行 `npm install --prefix themes/stellar`；npm 包是否为 v2 以实际公开版本为准。
+
+Full Changelog: [1.44.0...main](https://github.com/xaoxuu/hexo-theme-stellar/compare/1.44.0...main)
+
 ## 1.44.0
 
 > 发布日期：2026-08-21
