@@ -40,6 +40,15 @@
       color: var(--text-p1)
       >.dropdown-arrow
         transform: rotate(180deg)
+
+.tag-plugin > .dropdown-trigger
+  background: var(--block)
+  &:hover
+    background: var(--block-border)
+
+.tag-plugin[open] > .dropdown-trigger
+  background: var(--block-border)
+
 .dropdown-menu
   display: flex
   flex-direction: column
