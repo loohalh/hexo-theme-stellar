@@ -217,13 +217,13 @@ theme: stellar
 
 ## Blueprint 创建与站点检查
 
-完整 Blueprint 由独立的 [Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples) 仓库维护与分发。`lightblog`、`blog`、`knowledge`、`stellar` 分别是一套可以独立运行的完整示例站点；创建器只写入新目录，不覆盖、合并或迁移已有站点。
+完整 Blueprint 由独立的 [Stellar Examples](https://github.com/xaoxuu/hexo-theme-stellar-examples) 仓库维护与分发。`lightblog`、`blog`、`knowledge`、`docs` 分别是一套可以独立运行的完整示例站点；创建器只写入新目录，不覆盖、合并或迁移已有站点。
 
 ```bash
-curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/releases/latest/download/install.sh | sh
+curl -fsSL https://github.com/xaoxuu/hexo-theme-stellar-examples/raw/main/install.sh | sh -s -- create stellar-lightblog --blueprint=lightblog --non-interactive
 ```
 
-创建器会交互选择 Blueprint、目标目录、版本和依赖安装方式，再下载与该版本绑定的单站归档并校验 SHA-256。主题 npm 包不再包含示例内容，也不再注册 `hexo stellar init`。
+安装脚本从 Examples 的 main 分支取得源码，在临时目录生成带 SHA-256 校验的单站归档，再按指定 Blueprint 创建站点并安装依赖。主题 npm 包不再包含示例内容，也不再注册 `hexo stellar init`。
 
 Blueprint 不是构建前置条件。只有普通 Post/Page 的站点可以不创建 `_config.stellar.yml`，直接使用 Schema 默认值运行 doctor 和 generate；空文件与缺失文件语义相同。Wiki/Topic/Notebook 内容在已注册数据与源码关系唯一时也不必重复写 `collection`，冲突时按 doctor 给出的候选与最小修复处理。
 
