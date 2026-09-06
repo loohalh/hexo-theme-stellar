@@ -50,8 +50,14 @@ module.exports = deepFreeze({
       colorSchemeSwitch: "/js/runtime/extensions/color-scheme-switch.js",
       deferredIcons: "/js/runtime/extensions/deferred-icons.js",
       dropdown: "/js/runtime/extensions/dropdown.js",
+      heroEffect: "/js/runtime/extensions/hero-effect.js",
       reveal: "/js/runtime/extensions/reveal.js",
       settings: "/js/runtime/extensions/settings.js"
+    },
+    heroEffects: {
+      ferrofluid: "/js/runtime/hero-effects/ferrofluid.js",
+      galaxy: "/js/runtime/hero-effects/galaxy.js",
+      lightRays: "/js/runtime/hero-effects/light-rays.js"
     },
     dependencies: {
       marked: "https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js",

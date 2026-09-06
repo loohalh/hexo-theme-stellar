@@ -47,6 +47,138 @@ test("Collection config normalizes public fields and freezes open parameter bags
   assert.equal(Object.isFrozen(parsed.comments.options), true);
 });
 
+test("Wiki Hero validates registered Light Rays options without changing Galaxy", () => {
+  const options = {
+    raysOrigin: "top-center",
+    raysColor: "#00ffff",
+    raysSpeed: 1.5,
+    lightSpread: 0.8,
+    rayLength: 1.2,
+    pulsating: true,
+    fadeDistance: 1,
+    saturation: 0.9,
+    followMouse: true,
+    mouseInfluence: 0.1,
+    noiseAmount: 0.1,
+    distortion: 0.05,
+    lightMode: false
+  };
+  const parsed = parseCollectionConfig({
+    name: "Docs",
+    hero: {
+      enabled: true,
+      background: {
+        effect: {
+          type: "light-rays",
+          options,
+          runtime: { pause_when_hidden: false, respect_reduced_motion: false }
+        }
+      }
+    }
+  }, "source/_data/wiki/docs.yml");
+  assert.deepEqual(parsed.hero.background.effect, {
+    type: "light-rays",
+    options,
+    runtime: { pauseWhenHidden: false, respectReducedMotion: false }
+  });
+  assert.equal(Object.isFrozen(parsed.hero.background.effect.options), true);
+
+  for (const raysOrigin of [
+    "top-left", "top-center", "top-right", "left", "right",
+    "bottom-left", "bottom-center", "bottom-right"
+  ]) {
+    assert.doesNotThrow(() => parseCollectionConfig({
+      name: "Docs",
+      hero: { background: { effect: { type: "light-rays", options: { raysOrigin, raysColor: "00ffff" } } } }
+    }, "source/_data/wiki/docs.yml"));
+  }
+
+  assert.doesNotThrow(() => parseCollectionConfig({
+    name: "Docs",
+    hero: { background: { effect: { type: "galaxy", options: { starSpeed: 0.5 } } } }
+  }, "source/_data/wiki/docs.yml"));
+
+  assert.throws(
+    () => parseCollectionConfig({
+      name: "Docs",
+      hero: { background: { effect: { type: "unknown" } } }
+    }, "source/_data/wiki/docs.yml"),
+    /hero\.background\.effect\.type/
+  );
+
+  for (const [key, value] of [
+    ["raysOrigin", "center"],
+    ["raysColor", "cyan"],
+    ["raysSpeed", "fast"],
+    ["followMouse", "yes"],
+    ["unknown", true]
+  ]) {
+    assert.throws(
+      () => parseCollectionConfig({
+        name: "Docs",
+        hero: { background: { effect: { type: "light-rays", options: { [key]: value } } } }
+      }, "source/_data/wiki/docs.yml"),
+      new RegExp(`hero\\.background\\.effect\\.options\\.${key}`)
+    );
+  }
+});
+
+test("Wiki Hero validates registered Ferrofluid options", () => {
+  const options = {
+    colors: ["#ffffff", "06B6D4", "#E0F2FE"],
+    backgroundColor: "#03010A",
+    speed: 0.75,
+    scale: 1.6,
+    turbulence: 1.2,
+    fluidity: 0.1,
+    rimWidth: 0.2,
+    sharpness: 2.5,
+    shimmer: 1.5,
+    glow: 2,
+    flowDirection: "left",
+    opacity: 0.9,
+    mouseInteraction: true,
+    mouseStrength: 1,
+    mouseRadius: 0.35,
+    mouseDampening: 0.15,
+    paused: false,
+    dpr: null,
+    mixBlendMode: "screen"
+  };
+  const parsed = parseCollectionConfig({
+    name: "Docs",
+    hero: { background: { effect: { type: "ferrofluid", options } } }
+  }, "source/_data/wiki/docs.yml");
+  assert.deepEqual(parsed.hero.background.effect, { type: "ferrofluid", options });
+  assert.equal(Object.isFrozen(parsed.hero.background.effect.options.colors), true);
+
+  assert.doesNotThrow(() => parseCollectionConfig({
+    name: "Docs",
+    hero: { background: { effect: { type: "ferrofluid", options: { dpr: 1.5 } } } }
+  }, "source/_data/wiki/docs.yml"));
+
+  for (const [key, value] of [
+    ["colors", []],
+    ["colors", Array(9).fill("#ffffff")],
+    ["colors", ["white"]],
+    ["backgroundColor", "black"],
+    ["flowDirection", "diagonal"],
+    ["dpr", 0],
+    ["mixBlendMode", ""],
+    ["speed", "fast"],
+    ["paused", "yes"],
+    ["unknown", true]
+  ]) {
+    assert.throws(
+      () => parseCollectionConfig({
+        name: "Docs",
+        hero: { background: { effect: { type: "ferrofluid", options: { [key]: value } } } }
+      }, "source/_data/wiki/docs.yml"),
+      new RegExp(`hero\\.background\\.effect\\.options\\.${key}`)
+    );
+  }
+});
+
 test("Front Matter parser preserves Hexo fields and normalizes Stellar fields", () => {
   const parsed = parsePageConfig({
     title: "Page",

@@ -5,10 +5,10 @@ This project includes or adapts portions of the following third-party software.
 ## React Bits
 
 - Project: [React Bits](https://github.com/DavidHDev/react-bits)
-- Components: Galaxy and Spotlight Card
+- Components: Ferrofluid, Galaxy and Spotlight Card
 - License: MIT
 - Copyright: Copyright (c) 2026 David Haz
-- Usage: Adapted for the Wiki Galaxy WebGL background and Card Hover spotlight layer.
+- Usage: Adapted for the Wiki Ferrofluid and Galaxy WebGL backgrounds and Card Hover spotlight layer.
 
 ### MIT License
 

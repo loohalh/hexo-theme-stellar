@@ -11,6 +11,7 @@ const {
 } = require("../scripts/lib/models");
 const { parseStellarConfig } = require("../scripts/lib/config-schema");
 const { parseCollectionConfig, parsePageConfig } = require("../scripts/lib/content-config");
+const { heroEffectDefinitions } = require("../scripts/lib/hero-effect-registry");
 const { SHARE_SERVICE_IDS } = require("../scripts/lib/share-services");
 
 const stellarConfig = parseStellarConfig({ themeConfig: {}, siteConfig: {} });
@@ -128,6 +129,26 @@ test("all PageViewModel profiles use the shared validated and frozen pipeline", 
     assert.equal(viewModel.collection.profile, profile);
     assertDeepFrozen(viewModel);
   }
+});
+
+test("Wiki Hero projects registered effect presentation without changing public options", () => {
+  const [definition] = heroEffectDefinitions();
+  assert.ok(definition);
+  const options = definition.defaults;
+  const input = wikiInput();
+  input.collectionConfig = parseCollectionConfig({
+    name: "Docs",
+    route: { path: "/wiki/docs/" },
+    hero: {
+      enabled: true,
+      background: {
+        effect: { type: definition.id, options }
+      }
+    }
+  }, input.collectionSource);
+  const effect = buildWikiPageViewModel(input).render.cover.background.effect;
+  assert.deepEqual(effect.options, options);
+  assert.deepEqual(effect.presentation, definition.presentation(options));
 });
 
 test("Article PageViewModels preserve registered share service order", () => {

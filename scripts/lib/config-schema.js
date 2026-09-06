@@ -4,6 +4,10 @@
 const nodePath = require("node:path");
 
 const { CONFIG_SCHEMA } = require("../schema/config-schema");
+const {
+  HERO_EFFECT_IDS,
+  getHeroEffectDefinition
+} = require("./hero-effect-registry");
 
 class ConfigSchemaError extends Error {
   constructor(issues) {
@@ -212,25 +216,6 @@ function normalizeStringList(value, normalize) {
   return result;
 }
 
-const GALAXY_OPTION_TYPES = Object.freeze({
-  focal: "number_array",
-  rotation: "number_array",
-  starSpeed: "number",
-  density: "number",
-  hueShift: "number",
-  disableAnimation: "boolean",
-  speed: "number",
-  mouseInteraction: "boolean",
-  glowIntensity: "number",
-  saturation: "number",
-  mouseRepulsion: "boolean",
-  repulsionStrength: "number",
-  twinkleIntensity: "number",
-  rotationSpeed: "number",
-  autoCenterRepulsion: "number",
-  transparent: "boolean"
-});
-
 function validateNonEmptyString(node, input, source, path, issues, nullable) {
   if (nullable && input == null) return;
   if (typeof input === "string" && input.trim().length > 0) return;
@@ -252,22 +237,37 @@ function validateStringTree(node, input, source, path, issues) {
   }
 }
 
-function validateGalaxyOptions(node, options, source, path, issues) {
+function validateEffectOptions(node, definition, options, source, path, issues) {
   if (!isPlainObject(options)) {
     issues.push(issue("invalid_type", source, path, valueType(options), "object", node.migration));
     return;
   }
   for (const [key, value] of Object.entries(options)) {
-    const expected = GALAXY_OPTION_TYPES[key];
+    const rule = definition.options[key];
     const optionPath = `${path}.${key}`;
-    if (!expected) {
-      issues.push(issue("unknown_field", source, optionPath, valueType(value), "known Galaxy option", node.migration));
-    } else if (expected === "number" && (typeof value !== "number" || !Number.isFinite(value))) {
+    if (!rule) {
+      issues.push(issue("unknown_field", source, optionPath, valueType(value), `known ${definition.label} option`, node.migration));
+    } else if (rule.type === "number" && (typeof value !== "number" || !Number.isFinite(value))) {
       issues.push(issue("invalid_type", source, optionPath, valueType(value), "finite number", node.migration));
-    } else if (expected === "boolean" && typeof value !== "boolean") {
+    } else if (rule.type === "nullable_positive_number" && value !== null && (typeof value !== "number" || !Number.isFinite(value) || value <= 0)) {
+      issues.push(issue("invalid_value", source, optionPath, valueType(value), "positive finite number or null", node.migration));
+    } else if (rule.type === "nullable_string" && value !== null && (typeof value !== "string" || value.trim().length === 0)) {
+      issues.push(issue("invalid_value", source, optionPath, valueType(value), "non-empty string or null", node.migration));
+    } else if (rule.type === "boolean" && typeof value !== "boolean") {
       issues.push(issue("invalid_type", source, optionPath, valueType(value), "boolean", node.migration));
-    } else if (expected === "number_array" && (!Array.isArray(value) || value.some(item => typeof item !== "number" || !Number.isFinite(item)))) {
+    } else if (rule.type === "number_array" && (!Array.isArray(value) || value.some(item => typeof item !== "number" || !Number.isFinite(item)))) {
       issues.push(issue("invalid_type", source, optionPath, valueType(value), "number[]", node.migration));
+    } else if (rule.type === "enum" && (typeof value !== "string" || !rule.values.includes(value))) {
+      issues.push(issue("invalid_value", source, optionPath, valueType(value), rule.values.join(" | "), node.migration));
+    } else if (rule.type === "hex_color" && (typeof value !== "string" || !/^#?[a-f\d]{6}$/i.test(value))) {
+      issues.push(issue("invalid_value", source, optionPath, valueType(value), "six-digit hexadecimal color", node.migration));
+    } else if (rule.type === "hex_color_array" && (
+      !Array.isArray(value)
+      || value.length < 1
+      || value.length > 8
+      || value.some(item => typeof item !== "string" || !/^#?[a-f\d]{6}$/i.test(item))
+    )) {
+      issues.push(issue("invalid_value", source, optionPath, valueType(value), "one to eight six-digit hexadecimal colors", node.migration));
     }
   }
 }
@@ -280,11 +280,14 @@ function validateEffect(node, input, source, path, issues) {
       issues.push(issue("unknown_field", source, `${path}.${key}`, valueType(input[key]), allowed.join(" | "), node.migration));
     }
   }
+  const definition = getHeroEffectDefinition(input.type);
   if (typeof input.type !== "string" || input.type.length === 0) {
     issues.push(issue("missing_field", source, `${path}.type`, valueType(input.type), "non-empty string", node.migration));
+  } else if (!definition) {
+    issues.push(issue("invalid_value", source, `${path}.type`, valueType(input.type), HERO_EFFECT_IDS.join(" | "), node.migration));
   }
-  if (input.options != null && input.type === "galaxy") {
-    validateGalaxyOptions(node, input.options, source, `${path}.options`, issues);
+  if (input.options != null && definition) {
+    validateEffectOptions(node, definition, input.options, source, `${path}.options`, issues);
   } else if (input.options != null && !isPlainObject(input.options)) {
     issues.push(issue("invalid_type", source, `${path}.options`, valueType(input.options), "object", node.migration));
   }

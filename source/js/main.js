@@ -663,14 +663,6 @@ const init = {
       }
     });
 
-    const galaxyCanvases = document.querySelectorAll('.wiki-cover-background.galaxy canvas');
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion || galaxyCanvases.length === 0) return;
-    utils.js('/js/plugins/galaxy.js').then(function () {
-      if (stellar.galaxy && typeof stellar.galaxy.mountAll === 'function') {
-        stellar.galaxy.mountAll(galaxyCanvases);
-      }
-    }).catch(function () {});
   },
   leftbarScroll: () => {
     const container = document.querySelector('.site-region--leftbar .site-region__body');

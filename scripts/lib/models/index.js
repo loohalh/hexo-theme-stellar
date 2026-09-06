@@ -26,6 +26,7 @@ const { caption } = require("../caption");
 const { wikiReadmeHtml } = require("../wiki_readme");
 const { resolveServiceProvider } = require("../service-provider");
 const { filterShareServices } = require("../share-services");
+const { projectHeroEffect } = require("../hero-effect-registry");
 const { normalizeThemeComments, resolveCommentsModel } = require("../comments");
 const {
   articleFooterDefaults,
@@ -42,6 +43,12 @@ function cloneValue(value) {
     result[key] = cloneValue(child);
   }
   return result;
+}
+
+function heroBackground(value) {
+  const background = cloneValue(value || {});
+  if (background.effect) background.effect = projectHeroEffect(background.effect);
+  return background;
 }
 
 function deepFreeze(value) {
@@ -728,7 +735,7 @@ function buildWikiRenderModel(input, collection, item) {
     },
     cover: {
       enabled: isHomepage && hero.enabled === true,
-      background: cloneValue(hero.background || {}),
+      background: heroBackground(hero.background),
       preview: cloneValue(hero.preview || {}),
       actions: cloneValue(Array.isArray(hero.actions) ? hero.actions : []),
       title: collection.identity.headline || collection.identity.name,

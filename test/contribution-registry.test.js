@@ -14,6 +14,7 @@ const {
   buildContributionEntries,
   contributionSchemaIds
 } = require("../scripts/lib/contribution-registry");
+const { heroEffectRuntimeConfig } = require("../scripts/lib/hero-effect-registry");
 const INTERNAL_CONSTANTS = require("../scripts/lib/internal-constants");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -78,12 +79,15 @@ test("Runtime Manifest 顺序直接来自 descriptor 注册表", () => {
   const cardHover = entries.find(item => item.id === "card-hover");
   const deferredIcons = entries.find(item => item.id === "deferred-icons");
   const dropdown = entries.find(item => item.id === "dropdown");
+  const heroEffect = entries.find(item => item.id === "hero-effect");
   assert.equal("feature" in cardHover.config, false);
   assert.deepEqual(cardHover.config.assets, INTERNAL_CONSTANTS.assets.features.cardHover);
   assert.equal(deferredIcons.module, "/js/runtime/extensions/deferred-icons.js");
   assert.equal(dropdown.module, "/js/runtime/extensions/dropdown.js");
   assert.deepEqual(deferredIcons.config, {});
   assert.deepEqual(dropdown.config, {});
+  assert.equal(heroEffect.module, INTERNAL_CONSTANTS.assets.runtime.heroEffect);
+  assert.deepEqual(heroEffect.config.effects, heroEffectRuntimeConfig());
   assert.equal(entries.some(item => item.id === "reveal"), false);
   for (const entry of entries) {
     const definition = CONTRIBUTIONS.find(item => item.id === entry.id);

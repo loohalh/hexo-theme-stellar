@@ -4,6 +4,7 @@
 
 const { defineContributions } = require("./contribution-contract");
 const INTERNAL = require("./internal-constants");
+const { heroEffectRuntimeConfig } = require("./hero-effect-registry");
 
 const FEATURE_ENTRY = "/js/runtime/extensions/feature.js";
 const PLUGIN_SYSTEM_DOC = "docs/knowledge/07-外部集成/plugin-system.md";
@@ -91,6 +92,19 @@ const CONTRIBUTIONS = defineContributions([
         }
       });
     }
+  },
+  {
+    id: "hero-effect",
+    kind: "feature",
+    entry: runtimeEntry(INTERNAL.assets.runtime.heroEffect),
+    resources: ["runtime.heroEffect", "heroEffects"],
+    activation: selector("canvas[data-hero-effect]"),
+    schema: null,
+    i18n: null,
+    docs: { category: "Components", path: "docs/knowledge/03-内容系统/wiki-docs.md" },
+    tests: [RUNTIME_TEST, RUNTIME_CONSUMPTION_TEST],
+    defaultsOwner: null,
+    project: () => configResult({ effects: heroEffectRuntimeConfig() })
   },
   {
     id: "lazy-loading",
