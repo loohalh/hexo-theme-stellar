@@ -189,7 +189,7 @@ Post/Topic/Wiki/Notebook 的模型先解析 `services.contributors` 选中的 pr
 | `post` | `render.article.footer.share` 非 null；默认继承 `article.footer.share` |
 | 其他布局 | `page.share == true` |
 
-模型只保留 `wechat/weibo/email/link` 四个平台；解析后的 services 非空时才生成 share 对象和按钮。Collection 或 Page 的 `footer.share: true` 恢复全局 Article 服务列表，数组则显式选择服务。
+模型只保留注册表中的 `wechat/weibo/x/telegram/whatsapp/email/link/system` 八个服务；解析后的 services 非空时才生成 share 对象和按钮。Collection 或 Page 的 `footer.share: true` 恢复全局 Article 服务列表，数组则显式选择服务。
 
 ### 支持的平台
 
@@ -199,8 +199,12 @@ Post/Topic/Wiki/Notebook 的模型先解析 `services.contributors` 选中的 pr
 |------|------|
 | `wechat` | 调用 `util.toggle("qrcode-wechat")` 显示/隐藏二维码面板 |
 | `weibo` | 打开 `service.weibo.com/share/share.php`，带 URL、标题、图片、摘要 |
+| `x` | 打开 X 的发帖分享页，带标题与 URL |
+| `telegram` | 打开 Telegram 分享页，带标题与 URL |
+| `whatsapp` | 打开 WhatsApp 分享页，正文包含标题与 URL |
 | `email` | 打开 `mailto:?subject=...&body=...` 链接 |
 | `link` | 调用 `util.copy("copy-link", ...)` 复制永久链接到剪贴板 |
+| `system` | 调用 Web Share；不可用时回退到复制链接 |
 
 分享按钮中的图标由主题图标配置以外部 SVG `<img>` 输出；样式将图片限制为 20×20px，并设为块级元素，使其与分享栏 20px 网格列对齐。
 
