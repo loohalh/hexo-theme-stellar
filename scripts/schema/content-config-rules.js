@@ -199,6 +199,9 @@ const COLLECTION_TARGET_DEFINITIONS = [
   ["listing.sort", ["object", "null"], literal(null), { boundary: "sealed" }],
   ["listing.sort.field", ["string", "null"], literal(null), { values: ["date", "updated", "title"] }],
   ["listing.sort.direction", ["string", "null"], literal(null), { values: ["asc", "desc"] }],
+  ["visibility", "object", literal({}), { boundary: "sealed" }],
+  ["visibility.listed", "boolean", literal(true)],
+  ["visibility.searchable", "boolean", literal(true)],
   ["navigation.tree", ["array", "object"], literal([]), { boundary: "record" }]
 ];
 

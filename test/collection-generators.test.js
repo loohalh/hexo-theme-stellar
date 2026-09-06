@@ -102,4 +102,13 @@ test("Notebook generator projects collection ownership through notebookIndex", (
   assert.equal(noteRoute.data.notebookIndex.collection.id, "dev");
   assert.deepEqual(noteRoute.data.notebookIndex.items.map(item => item.id), ["note"]);
   assert.equal(Object.isFrozen(noteRoute.data.notebookIndex), true);
+
+  const noIndexRoutes = generator.call(context({
+    notebookIndex: Object.freeze({
+      items: Object.freeze([notebook]),
+      recentItems: Object.freeze([note])
+    })
+  }, { profiles: { notebook_index: { path: null } } }), {});
+  assert.equal(noIndexRoutes.some(route => route.layout?.includes("notebooks")), false);
+  assert.equal(noIndexRoutes.some(route => route.layout?.includes("notes")), true);
 });

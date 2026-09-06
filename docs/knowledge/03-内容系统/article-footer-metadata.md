@@ -82,7 +82,7 @@ flowchart TD
 
 - 模板 [post_tags.ejs](../../../layout/_partial/main/article/post_tags.ejs) 只接收显式 `tags` local；每个标签渲染为 `<a class="tag" href="${pretty_url(tag.path)}">`，链接内先输出 `default:hashtag` 图标再输出标签名。
 - 样式 [source/css/_components/partial/article-tags.styl](../../../source/css/_components/partial/article-tags.styl)：复用 [source/css/_defines/func.styl](../../../source/css/_defines/func.styl) 的 `tag-chip()` mixin——胶囊圆角（`border-radius: 999px`）、`var(--block)` 底色、`$fs-13`，前缀为内联 hashtag 图标（`.tag svg`：`1em`、`opacity: .4`）；hover 时文字变 `var(--text)`、背景变 `var(--block-border)`、图标变主题色且不透明；容器 `justify-content: center` 居中，`margin: 2rem -0.5rem 0` 抵消标签外边距并保留与正文的 2rem 间距。与标签页（`/blog/tags/`）标签胶囊为同一套样式。
-- 博客文章标签行由 `article.footer.show_tags` 控制，页面可用 `footer.show_tags` 覆盖；wiki 页不渲染标签行。笔记页由 [layout/_partial/main/notebook/note_tags.ejs](../../../layout/_partial/main/notebook/note_tags.ejs) 消费 `render.article.tags`，在正文末尾渲染笔记标签（标签名与链接已在模型层按笔记本标签树解析），复用同一 `article-tags` 容器与 `tag-chip()` 胶囊样式。
+- Post、Topic 和 Notebook 的标签行都由已解析的 `footer.show_tags` 控制：全局 `article.footer.show_tags` 进入 Collection → Page 级联，Page 可用 `footer.show_tags` 覆盖；Wiki 页不渲染标签行。笔记页由 [layout/_partial/main/notebook/note_tags.ejs](../../../layout/_partial/main/notebook/note_tags.ejs) 消费 `render.article.tags`，标签名与链接已在模型层按笔记本标签树解析，并复用同一 `article-tags` 容器与 `tag-chip()` 胶囊样式。
 
 **参考源码**：[layout/_partial/main/article/post_tags.ejs](../../../layout/_partial/main/article/post_tags.ejs)、[layout/page.ejs](../../../layout/page.ejs)、[source/css/_components/partial/article-tags.styl](../../../source/css/_components/partial/article-tags.styl)、[source/css/_defines/func.styl](../../../source/css/_defines/func.styl)
 
@@ -131,11 +131,11 @@ flowchart TD
 
 | 页面类型 | 关闭机制 | 开启机制 | 默认来源 |
 |----------|----------|----------|----------|
-| `post` | `page.footer.license: false` | `page.footer.license: <string>` | `article.footer.license` |
-| wiki 页面 | `footer.license: false` | `footer.license: true` 或 `<string>` | Wiki Collection → `article.footer.license` |
+| `post` | `page.footer.license: false` | `page.footer.license: true` 或 `<string>` | `article.footer.license` |
+| Wiki / Topic / Notebook | `footer.license: false` | Collection 或 Page `footer.license: true` 或 `<string>` | Collection → `article.footer.license` |
 
-- Collection `footer.license: true` 表示使用全局 `article.footer.license`
-- 页面级 `footer.license` 覆盖 Collection；`false` 生成空许可字符串
+- `footer.license: true` 表示使用全局 `article.footer.license`
+- Collection 默认继承全局许可协议；页面级 `footer.license` 覆盖 Collection，`false` 生成空许可字符串
 
 ### 作者插值
 
@@ -185,11 +185,11 @@ Post/Topic/Wiki/Notebook 的模型先解析 `services.contributors` 选中的 pr
 
 | 页面类型 | 是否显示分享 |
 |----------|--------------|
-| wiki 页面 | `render.article.footer.share` 非 null |
-| `post` | `render.article.footer.share` 非 null |
+| Wiki / Topic / Notebook | `render.article.footer.share` 非 null；Collection 默认关闭 |
+| `post` | `render.article.footer.share` 非 null；默认继承 `article.footer.share` |
 | 其他布局 | `page.share == true` |
 
-模型只保留 `wechat/weibo/email/link` 四个平台；解析后的 services 非空时才生成 share 对象和按钮。
+模型只保留 `wechat/weibo/email/link` 四个平台；解析后的 services 非空时才生成 share 对象和按钮。Collection 或 Page 的 `footer.share: true` 恢复全局 Article 服务列表，数组则显式选择服务。
 
 ### 支持的平台
 

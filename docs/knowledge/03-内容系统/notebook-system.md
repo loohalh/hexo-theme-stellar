@@ -85,6 +85,9 @@ listing:
   sort:
     field: updated
     direction: desc
+visibility:
+  listed: true
+  searchable: true
 leftbar:
   widgets: [tagtree, recent]
 rightbar:
@@ -92,14 +95,19 @@ rightbar:
 footer:
   license: null
   share: null
+  show_tags: true
 ```
 
 - `listing.order` 控制 Notebook 总索引顺序。
 - `listing.per_page: null` 继承 Hexo；`0` 表示不分页。
-- `listing.sort.field` 为 `date` 或 `updated`，`direction` 为 `asc` 或 `desc`。
-- `footer.license/share: null` 继承 Article 默认；`false` / `[]` 显式关闭。
+- `listing.sort.field` 为 `date`、`updated` 或 `title`，`direction` 为 `asc` 或 `desc`。
+- Collection 默认继承 Article 许可协议，但默认关闭分享。`footer.license/share: null` 保持该 Collection 默认；`true` 显式启用全局 Article 值；字符串或服务数组显式覆盖；`false` / `[]` 显式关闭。
+- `visibility` 作为 Note 的默认可见性；Page Front Matter 可再覆盖。`listed: false` 同时隐藏总索引中的 Notebook 卡片，但不删除该 Notebook 的路由。
 - `active_menu` 按 Page → Collection → Profile 级联；Region 按 Page → Collection → Profile → 全局级联。Article、Footer、Comments 分别从对应主题默认值进入 Collection → Page。
 - 未声明 `leftbar.brand` 时，主题从 Notebook 的 `name/tagline/icon/route` 生成 Leftbar Brand；显式 Profile、Collection 或 Page Brand 仍可局部覆盖或设为 `false`。
+- `notebook.tag_icons` 只在实际标签匹配时提供图标；未使用或已过期的键被忽略，不会使构建失败。
+
+`profiles.notebook_index.path` 控制“全部笔记本”总索引路由；设为 `null` 时不生成该总索引，同时 Note 页的 Brand 返回按钮和面包屑也不链接它。各 Notebook 的集合首页、标签页和 Note 详情路由仍正常生成。
 
 ## Note Front Matter
 
@@ -120,8 +128,9 @@ visibility:
 
 - 层级标签用 `/` 分隔；`tools/cli` 同时建立 `tools` 与 `tools/cli` 节点。
 - `listing.priority` 越大越靠前；相同 priority 再按 Notebook `listing.sort` 稳定排序。
-- `visibility.listed: false` 从单本列表、标签页和 recent 排除，不删除详情路由。
-- `visibility.searchable: false` 只排除站内搜索。
+- `visibility.listed: false` 从单本列表、标签页和 recent 排除，不删除详情路由；省略时继承 Collection。
+- `visibility.searchable: false` 只排除站内搜索；省略时继承 Collection。
+- `footer.show_tags` 控制正文末尾的 Note 标签行；省略时继承 Collection 与全局 Article 配置。
 - 页面还可覆盖 `cover`、`banner`、三个 Region、`active_menu`、`breadcrumb`、`article`、`footer`、`comments`、`render` 与 `seo`；不存在 `pin`、`sticky`、`order_by`、`tagcons`、`menu_id` 等 v1 兼容读取。
 
 ## 三层路由与投影
@@ -137,9 +146,9 @@ visibility:
 ## 两阶段构建
 
 1. Collection Pipeline 单遍发现 Post/Page，并按 `notebook:<id>` 分组。
-2. Notebook adapter 建立 collection base 与标签树；共享 two-stage 协议生成第一阶段 Note listing。
-3. 聚合每个 Notebook 的排序列表、标签、recent 和总索引，并深度冻结 `notebookIndex`。
+2. Notebook adapter 为每个 Notebook 建立一份共享的规范 `CollectionModel`，再由共享 two-stage 协议生成第一阶段 Note listing。
+3. 构建事件从 `CollectionModel.navigation.tags` 和成员记录聚合每个 Notebook 的标签树、排序列表、recent 和总索引，并深度冻结 `notebookIndex`。
 4. 把集合 `tagTree` 与 `recentItems` 写入最终 Note ViewModel，再执行模型 Schema 校验和冻结。
 5. 生成器用同一 listed/tag 原语产生集合首页、标签页与分页 locals。
 
-该流程保持线性发现与分组；不会为每个 Notebook 重扫全部页面，也不改变 DOM、视觉、既有显式 Note URL 与客户端 API。
+该流程保持线性发现与分组；不会为每个 Notebook 重扫全部页面，也不维护第二份 raw/snake_case Notebook 模型。

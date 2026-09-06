@@ -30,7 +30,7 @@ test("Theme config loads complete frozen defaults", () => {
   assert.equal(config.topbar.brand.style, undefined);
   assert.equal(config.leftbar.brand.style, "regular");
   assert.deepEqual(config.article.footer.share, SHARE_SERVICE_IDS);
-  assert.deepEqual(config.notebook.footer.share, []);
+  assert.equal(config.notebook.footer, undefined);
   assertDeepFrozen(config);
 });
 
@@ -117,12 +117,10 @@ test("Theme config rejects 1.44 roots with current migration targets", () => {
 test("Theme share defaults accept only registered service IDs", () => {
   const config = parseStellarConfig({
     themeConfig: {
-      article: { footer: { share: SHARE_SERVICE_IDS } },
-      notebook: { footer: { share: SHARE_SERVICE_IDS } }
+      article: { footer: { share: SHARE_SERVICE_IDS } }
     }
   });
   assert.deepEqual(config.article.footer.share, SHARE_SERVICE_IDS);
-  assert.deepEqual(config.notebook.footer.share, SHARE_SERVICE_IDS);
   assert.deepEqual(parseStellarConfig({ themeConfig: { article: { footer: { share: [] } } } }).article.footer.share, []);
   assert.throws(
     () => parseStellarConfig({ themeConfig: { article: { footer: { share: ["unknown"] } } } }),

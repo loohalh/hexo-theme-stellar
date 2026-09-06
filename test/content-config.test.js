@@ -140,6 +140,15 @@ test("Collection registry capabilities reject profile fields without runtime con
   );
 });
 
+test("Collection visibility is a shared listed and searchable cascade", () => {
+  const parsed = parseCollectionConfig({
+    name: "Private notes",
+    visibility: { listed: false, searchable: false }
+  }, "notebook.yml");
+  assert.deepEqual(parsed.visibility, { listed: false, searchable: false });
+  validateCollectionProfileConfig(parsed, "notebook.yml", "notebook", getProfileAdapter("notebook").config);
+});
+
 test("Content regions distinguish inheritance from explicit empty lists", () => {
   const collection = parseCollectionConfig({ name: "Docs", rightbar: { widgets: ["toc"] } });
   const page = parsePageConfig({ leftbar: { widgets: [] } });

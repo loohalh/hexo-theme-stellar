@@ -48,6 +48,7 @@ rightbar:
 | `hero` | 仅 Wiki Collection 首页 Hero |
 | `banner` | Collection 内容页 Banner 默认值 |
 | `listing` | 排序与分页 |
+| `visibility` | Collection 及成员页的默认可列出/可搜索状态 |
 | `topbar/leftbar/rightbar` | Collection 页面 Region 覆盖 |
 | `active_menu/breadcrumb` | 菜单激活和面包屑 |
 | `navigation.tree` | 仅 Wiki Collection 的章节树 |
@@ -72,7 +73,9 @@ Hexo 自有 Front Matter（如 `title/date/layout/tags/categories/permalink`）�
 
 Region 对象的 `widgets` 数组只保存可移动 Widget 引用。Brand 与 Menu 由 Topbar / Leftbar 各自配置，Actions 只属于 `leftbar.footer.actions`。Wiki 与 Notebook 默认把 Collection 的 `name/tagline/icon/route` 投影为 Leftbar Brand；Profile、Collection 或 Page 的显式 `leftbar.brand` 会按级联顺序覆盖，Topic 继续使用站点 Brand。
 
-Collection 字段按实际消费者收窄：Wiki 只接受 `listing.priority/order`、`navigation.tree` 与 `hero`；Topic 只接受 `listing.excerpt_length/sort` 和 `route.start`；Notebook 只接受 `listing.order/excerpt_length/per_page/sort`。`route.path` 对三类 Collection 都有效。Page 的 `listing.priority` 只接受 Post、Topic 与 Notebook，归属可推导的页面会先解析归属再校验。
+Collection 字段按实际消费者收窄：Wiki 只接受 `listing.priority/order`、`navigation.tree` 与 `hero`；Topic 只接受 `listing.excerpt_length/sort` 和 `route.start`；Notebook 只接受 `listing.order/excerpt_length/per_page/sort`。`route.path` 和 `visibility` 对三类 Collection 都有效。Collection `visibility` 先作为成员 Page 默认，然后由 Page Front Matter 覆盖；它不删除详情路由。Page 的 `listing.priority` 只接受 Post、Topic 与 Notebook，归属可推导的页面会先解析归属再校验。
+
+Footer 也遵循共享 Collection 契约：许可协议默认继承 `article.footer.license`，分享在 Wiki、Topic、Notebook Collection 中默认关闭。Collection 或 Page 可用 `true` 显式恢复全局 Article 值，也可用具体值覆盖。
 
 Widget 的位置能力由类型 descriptor 声明，不允许实例扩大能力。能力不匹配只产生 warning 并跳过实例；Schema 错误、未知字段和旧字段则是构建错误。
 

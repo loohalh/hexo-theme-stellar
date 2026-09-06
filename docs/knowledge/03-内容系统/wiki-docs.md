@@ -164,7 +164,7 @@ flowchart TD
 - `collection` 固定包含 `id`、`profile`、`identity`、`source`、`route`、`navigation`、`listing`、`presentation`、`visibility`。
 - `navigation.tree` 是 `sections` 的普通对象投影，不保留 `WikiPage` 实例；路径、页码与首页标记已规范化。
 - `item` 已完成项目源码继承以及页面级导航、列表、展示和可见性覆盖；Collection `banner` 与页面 `banner` 按字段合并，Page 优先。
-- collection 的 `visibility.listed` 反映 shelf 状态；页面 `item.visibility` 独立从默认可列出、可搜索起算。
+- collection 的 `visibility.listed` 同时反映 shelf 状态与 Collection 配置；页面 `item.visibility` 从 Collection `visibility` 起算，再由 Page 覆盖。shelf 发布状态只控制 Collection 是否进入总索引，不作为成员页的隐式 Front Matter。
 - `render.document/layout/seo` 固化语言、head 注入、主题状态、布局状态、最终 Brand、Wiki 返回入口、面包屑，以及 title、description、keywords、robots、canonical、Open Graph 和 WebPage JSON-LD。
 - `render.cover` 固化 Hero 背景、预览、操作、源码和 release 数据；只有集合首页可以启用 Hero，普通内页始终为禁用状态。
 - `render.article` 固化 Banner、远程 README 占位、Footer、上下篇、评论、related 与正文排版状态；远程 README 也只在首页正文为空且仓库可解析时生成。

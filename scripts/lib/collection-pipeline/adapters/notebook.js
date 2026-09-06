@@ -1,6 +1,9 @@
 "use strict";
 
-const { buildNotebookPageViewModelBase } = require("../../models");
+const {
+  buildNotebookCollectionModel,
+  buildNotebookPageViewModelBase
+} = require("../../models");
 const {
   setProfileViewModelBase,
   setProfileViewModelInput
@@ -26,6 +29,17 @@ module.exports = {
       collection: { profile: "notebook", id: record.collectionId },
       tags: plainTerms(record.config.tags)
     }));
+    const collectionModels = new Map();
+    for (const [collectionId, collectionConfig] of pipeline.collections("notebook")) {
+      collectionModels.set(collectionId, buildNotebookCollectionModel({
+        collectionSource: sourcePathForData(`notebooks/${collectionId}`),
+        themeSource: pipeline.themeSource,
+        siteConfig: pipeline.ctx.config,
+        stellarConfig: pipeline.ctx.stellar?.config,
+        collectionConfig,
+        collectionItems
+      }, collectionId));
+    }
     for (const record of pipeline.members("notebook")) {
       pipeline.capture(() => {
         const collectionId = record.collectionId;
@@ -33,6 +47,7 @@ module.exports = {
           collectionSource: sourcePathForData(`notebooks/${collectionId}`),
           collectionId,
           collectionConfig: pipeline.collection("notebook", collectionId),
+          collectionModel: collectionModels.get(collectionId),
           collectionItems
         });
         const base = buildNotebookPageViewModelBase(input);

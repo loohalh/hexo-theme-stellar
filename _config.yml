@@ -267,7 +267,7 @@ profiles:
 
   # 配置 Notebook 总索引页默认布局。
   notebook_index:
-    # 设置 Notebook 总索引页的自动生成路径。
+    # 设置 Notebook 总索引页的自动生成路径；null 表示不生成总索引页。
     path: /notebooks/
     # 设置 Notebook 总索引页高亮的主菜单项；null 表示不高亮。
     active_menu: null
@@ -443,12 +443,6 @@ notebook:
     excerpt_length: 128
   # 配置 Notebook 标签对应的图标；空对象表示不指定图标。
   tag_icons: {}
-  # 配置 Notebook 内容页页脚覆盖项。
-  footer:
-    # 设置许可协议；null 表示继承对应的文章页脚配置。
-    license: null
-    # 设置分享服务；默认不显示，null 表示继承对应的文章页脚配置。
-    share: []
 
 # 配置设置页内容。
 settings:

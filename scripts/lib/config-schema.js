@@ -476,10 +476,10 @@ function validateNonEmptyRecordKeys(node, input, source, path, issues) {
   }
 }
 
-function validateLicense(node, input, source, path, issues, nullable) {
-  if (nullable && input == null) return;
+function validateLicense(node, input, source, path, issues, override) {
+  if (override && (input == null || input === true)) return;
   if (input === false || (typeof input === "string" && input.length > 0)) return;
-  issues.push(issue("invalid_value", source, path, valueType(input), nullable ? "null, false, or non-empty string" : "false or non-empty string", node.migration));
+  issues.push(issue("invalid_value", source, path, valueType(input), override ? "null, boolean, or non-empty string" : "false or non-empty string", node.migration));
 }
 
 function validateShareOverride(node, input, source, path, issues) {

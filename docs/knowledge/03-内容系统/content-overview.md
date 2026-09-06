@@ -60,8 +60,8 @@ Topic 和 Notebook 共用 two-stage 协议。Topic 先建立全部成员的 coll
 - 博客分页与当前分类/标签查询状态继续由 Hexo 提供，卡片只消费 `render.listing`。
 - Wiki 索引与 Notebook 标签列表共用 `listed + tag membership` 过滤原语，导航模型仍分别是 tree 与 tag tree。
 - Topic 索引按最新成员日期稳定排序；相同值保留发现顺序。
-- Notebook 先按 `listing.priority` 降序，再按 Collection `listing.sort` 稳定排序；`visibility.listed: false` 不进入列表或 recent，但详情路由仍生成。
-- 生成器只向 EJS 传冻结 listing/index locals；原始 `hexo.stellar.data.wiki/topic/notebooks` 只作为构建期状态，不是模板公共接口。
+- Notebook 先按 `listing.priority` 降序，再按 Collection `listing.sort` 稳定排序；Collection `visibility` 是成员默认，Page 可覆盖。最终 `listed: false` 不进入列表或 recent，但详情路由仍生成。
+- 生成器只向 EJS 传冻结 listing/index locals；Notebook 生成器消费最终 `notebookIndex` 投影，不维护或暴露第二份 raw/snake_case Notebook tree。
 
 ## 相关文档
 

@@ -203,7 +203,7 @@ flowchart TD
 
 ### Layout Profile 路径与菜单默认值
 
-v2 配置在 `profiles` 中为各页面 Profile 声明 `path` 和 `active_menu`。YAML 路径在 Schema 中规范化为根相对路径，目录以 `/` 结尾。Topic、Wiki、Notebook、Author 与 Error Profile 的路径由主题生成器投影为 Hexo route path；`blog_index.path` 只进入 Post `CollectionModel.route.baseDir`，近期文章首页仍由 Hexo 自有 `index_generator.path` 生成，主题配置不会反写该字段。配置运行时使用 camelCase，进入现有页面 ViewModel 或渲染上下文时仍投影为内部 `navigation.menu`：
+v2 配置在 `profiles` 中为各页面 Profile 声明 `path` 和 `active_menu`。YAML 路径在 Schema 中规范化为根相对路径，目录以 `/` 结尾。Topic、Wiki、Notebook、Author 与 Error Profile 的路径由主题生成器投影为 Hexo route path；`profiles.notebook_index.path: null` 只禁用 Notebook 总索引，不禁用各 Notebook 的集合、标签和详情路由。`blog_index.path` 只进入 Post `CollectionModel.route.baseDir`，近期文章首页仍由 Hexo 自有 `index_generator.path` 生成，主题配置不会反写该字段。配置运行时使用 camelCase，进入现有页面 ViewModel 或渲染上下文时仍投影为内部 `navigation.menu`：
 
 | 条件 | 冻结配置来源 |
 |---|---|

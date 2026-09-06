@@ -203,8 +203,6 @@ const CONFIG_RULES = Object.freeze([
   ["notebook.listing.sort.field", { values: ["date", "updated", "title"] }],
   ["notebook.listing.sort.direction", { values: ["asc", "desc"] }],
   ["notebook.tag_icons", { ...stringRecord(), validator: "non_empty_record_keys" }],
-  ["notebook.footer.license", { type: ["string", "boolean", "null"], validator: "license_override" }],
-  ["notebook.footer.share", { type: ["array", "null"], items: item("string", { defaultValue: "", values: SHARE_SERVICE_IDS }), normalizer: "nullable_trimmed_string_list" }],
 
   ["appearance.preset", { values: ["card", "glass", "minimal", "flat"] }],
   ["appearance.color_scheme", { values: ["auto", "light", "dark"] }],

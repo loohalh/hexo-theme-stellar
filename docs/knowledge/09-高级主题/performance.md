@@ -286,7 +286,7 @@ preconnect:
 主题构建期脚本已做以下优化，全部保持输出逐字节一致：
 
 - **wiki 文档树**（`scripts/lib/doc_tree.js`）：页面按 `wiki` / `path_key` 单遍 `Map` 分组，替代旧实现的 O(W·P) `filter`/`some` 与 O(S·K·P) sections 组装；`all_tags`/`relatedItems` 用 `Set`/`Map` 去重，输出语义不变。
-- **笔记本系统**（`scripts/lib/notebooks.js`）：单遍 `groupPagesByNotebook` 分组，替代每个笔记本全量 `filter` 全部页面。
+- **笔记本系统**（`scripts/lib/collection-pipeline/adapters/notebook.js` 与 `scripts/events/lib/notebooks.js`）：Collection Pipeline 单遍归属分组，每个 Notebook 只建立一份规范 `CollectionModel`，再线性聚合标签与列表。
 - **内容过滤器短路**：`md_table` 在内容不含 `<table` 时跳过 cheerio 解析；`img_lazyload` / `img_onerror` 在无 `<img` 页面直接返回。
 - **搜索生成**：索引只读取 `visibility.searchable`，不再维护第二套路由排除规则；`related_posts` helper 移除未使用的全量 `posts.filter` 死代码。
 

@@ -69,7 +69,7 @@ hexo.extend.generator.register("search_json_generator", function(locals) {
       var layouts = ["post"];
       if (!layouts.includes(post.layout)) return;
       const config = getPageConfig(post);
-      if (!config || !isSearchable(config)) return;
+      if (!config || !isSearchable(post.viewModel?.item || config)) return;
       const item = generateJson(post, config);
       res.push(item);
     });
@@ -79,7 +79,7 @@ hexo.extend.generator.register("search_json_generator", function(locals) {
       var layouts = ["page", "wiki"];
       if (!layouts.includes(page.layout)) return;
       const config = getPageConfig(page);
-      if (!config || !isSearchable(config)) return;
+      if (!config || !isSearchable(page.viewModel?.item || config)) return;
       const item = generateJson(page, config);
       res.push(item);
     });

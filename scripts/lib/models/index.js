@@ -30,6 +30,7 @@ const { normalizeThemeComments, resolveCommentsModel } = require("../comments");
 const {
   articleFooterDefaults,
   articlePresentationDefaults,
+  collectionFooterDefaults,
   requireContentConfig
 } = require("../content-defaults");
 
@@ -301,6 +302,9 @@ function buildPostArticleRender(input, item) {
   const configuredShare = footer.share === true
     ? articleConfig.footer.share
     : Array.isArray(footer.share) ? footer.share : [];
+  const configuredLicense = footer.license === true
+    ? articleConfig.footer.license
+    : footer.license;
   const shareServices = filterShareServices(configuredShare);
   const summarySource = typeof frontMatter.description === "string" && frontMatter.description.length > 0
     ? frontMatter.description
@@ -312,7 +316,7 @@ function buildPostArticleRender(input, item) {
     tags: footer.showTags === true ? normalizeLinks(input.page.tagLinks) : [],
     footer: {
       references: Array.isArray(footer.references) ? cloneValue(footer.references) : [],
-      license: resolveLicense(footer.license, item, runtimeData),
+      license: resolveLicense(configuredLicense, item, runtimeData),
       share: shareServices.length > 0 ? {
         services: shareServices,
         permalink: item.route.permalink,
@@ -902,7 +906,7 @@ function buildWikiCollectionModel(input, collectionId) {
     layers: [collectionRegions]
   });
   const globalArticle = articlePresentationDefaults(content);
-  const globalFooter = { ...articleFooterDefaults(content), share: [] };
+  const globalFooter = collectionFooterDefaults(content);
 
   return {
     id: collectionId,
@@ -938,8 +942,8 @@ function buildWikiCollectionModel(input, collectionId) {
       )
     },
     visibility: {
-      listed: input.collectionListed !== false,
-      searchable: true
+      listed: input.collectionListed !== false && collectionConfig.visibility?.listed !== false,
+      searchable: collectionConfig.visibility?.searchable !== false
     }
   };
 }
@@ -997,7 +1001,7 @@ function buildTopicCollectionModel(input, collectionId, currentId) {
     layers: [collectionRegions]
   });
   const globalArticle = articlePresentationDefaults(content);
-  const globalFooter = { ...articleFooterDefaults(content), share: [] };
+  const globalFooter = collectionFooterDefaults(content);
 
   return {
     id: collectionId,
@@ -1038,8 +1042,8 @@ function buildTopicCollectionModel(input, collectionId, currentId) {
       )
     },
     visibility: {
-      listed: input.collectionListed !== false,
-      searchable: true
+      listed: input.collectionListed !== false && collectionConfig.visibility?.listed !== false,
+      searchable: collectionConfig.visibility?.searchable !== false
     }
   };
 }
@@ -1102,12 +1106,7 @@ function buildNotebookCollectionModel(input, collectionId) {
     layers: [collectionRegions]
   });
   const globalArticle = articlePresentationDefaults(content);
-  const globalFooter = {
-    references: [],
-    license: notebookDefaults.footer.license ?? content.article.footer.license,
-    share: notebookDefaults.footer.share ?? content.article.footer.share,
-    showTags: content.article.footer.showTags
-  };
+  const globalFooter = collectionFooterDefaults(content);
 
   return {
     id: collectionId,
@@ -1138,8 +1137,8 @@ function buildNotebookCollectionModel(input, collectionId) {
       )
     },
     visibility: {
-      listed: true,
-      searchable: true
+      listed: collectionConfig.visibility?.listed !== false,
+      searchable: collectionConfig.visibility?.searchable !== false
     }
   };
 }
@@ -1188,7 +1187,6 @@ function buildNotebookArticleTags(collection, item) {
 
 function buildNotebookRenderModel(input, collection, item) {
   const core = buildPostRenderModel(input, collection, item);
-  const content = requireContentConfig(input.stellarConfig, input.themeSource);
   const explicitDescription = typeof input.frontMatter.description === "string"
     ? input.frontMatter.description
     : "";
@@ -1198,7 +1196,6 @@ function buildNotebookRenderModel(input, collection, item) {
       ? truncate(stripHTML(item.content), { length: collection.listing.excerptLength })
       : "");
   const collectionTitle = collection.identity.headline || collection.identity.name || collection.id;
-  const configuredLicense = item.presentation.footer?.license;
   const openGraph = core.seo.openGraph == null ? null : {
     ...core.seo.openGraph,
     args: {
@@ -1247,10 +1244,11 @@ function buildNotebookRenderModel(input, collection, item) {
       banner: cloneValue(item.presentation.banner || {}),
       created: item.date,
       updated: item.updated,
-      tags: buildNotebookArticleTags(collection, item),
+      tags: item.presentation.footer?.showTags === true
+        ? buildNotebookArticleTags(collection, item)
+        : [],
       footer: {
-        ...core.article.footer,
-        license: resolveLicense(configuredLicense, item, input.runtimeData)
+        ...core.article.footer
       },
       comments: core.article.comments
     },
@@ -1335,7 +1333,10 @@ function buildWikiPageViewModelBase(input) {
   const collection = buildWikiCollectionModel({ ...input, collectionConfig }, collectionId);
   const item = buildContentItemModel(page, frontMatter, collection, source, {
     source: collection.source,
-    visibility: { listed: true, searchable: true }
+    visibility: mergeConfig(
+      { listed: true, searchable: true },
+      input.collectionConfig?.visibility
+    )
   });
   return { collection, item };
 }
@@ -1404,7 +1405,10 @@ function completeTopicPageViewModel(input, base) {
   const collection = base.collection;
   const item = buildContentItemModel(input.page || {}, frontMatter, collection, source, {
     source: collection.source,
-    visibility: { listed: true, searchable: true }
+    visibility: mergeConfig(
+      { listed: true, searchable: true },
+      input.collectionConfig?.visibility
+    )
   });
   const render = buildPostRenderModel({
     ...input,
@@ -1476,7 +1480,7 @@ function buildNotebookPageViewModelBase(input) {
     ]);
   }
 
-  const collection = buildNotebookCollectionModel({
+  const collection = input.collectionModel || buildNotebookCollectionModel({
     ...input,
     siteConfig,
     collectionConfig
@@ -1490,7 +1494,10 @@ function completeNotebookPageViewModel(input, base) {
   const collection = base.collection;
   const item = buildContentItemModel(input.page || {}, frontMatter, collection, source, {
     source: collection.source,
-    visibility: { listed: true, searchable: true }
+    visibility: mergeConfig(
+      { listed: true, searchable: true },
+      input.collectionConfig?.visibility
+    )
   });
   const render = buildNotebookRenderModel({
     ...input,
@@ -1507,6 +1514,7 @@ function buildNotebookPageViewModel(input) {
 }
 
 module.exports = {
+  buildNotebookCollectionModel,
   buildNotebookPageViewModelBase,
   buildNotebookPageViewModel,
   buildPostPageViewModel,

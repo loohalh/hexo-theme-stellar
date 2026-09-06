@@ -174,6 +174,42 @@ test("Article PageViewModels keep an explicit empty share list disabled", () => 
   }
 });
 
+test("Collection article defaults disable sharing while explicit true restores Article defaults", () => {
+  for (const [build, input] of [
+    [buildWikiPageViewModel, wikiInput()],
+    [buildTopicPageViewModel, topicInput()],
+    [buildNotebookPageViewModel, notebookInput()]
+  ]) {
+    assert.equal(build(input).render.article.footer.share, null);
+    input.frontMatter = parsePageConfig({
+      ...input.frontMatter,
+      footer: { license: true, share: true }
+    }, input.source);
+    const article = build(input).render.article;
+    assert.deepEqual(article.footer.share.services, SHARE_SERVICE_IDS);
+    assert.match(article.footer.license, /署名-非商业性使用/);
+  }
+});
+
+test("Notebook applies Collection visibility and footer.show_tags to Note output", () => {
+  const input = notebookInput();
+  input.collectionConfig = parseCollectionConfig({
+    name: "dev",
+    route: { path: "/notebook/dev/" },
+    visibility: { listed: false, searchable: false },
+    footer: { show_tags: false }
+  }, input.collectionSource);
+  input.frontMatter = parsePageConfig({
+    title: "Note",
+    collection: { profile: "notebook", id: "dev" },
+    tags: ["tools/cli"]
+  }, input.source);
+  const viewModel = buildNotebookPageViewModel(input);
+  assert.deepEqual(viewModel.collection.visibility, { listed: false, searchable: false });
+  assert.deepEqual(viewModel.item.visibility, { listed: false, searchable: false });
+  assert.deepEqual(viewModel.render.article.tags, []);
+});
+
 test("Collection PageViewModel builders reject mismatched ownership", () => {
   for (const [build, input] of [
     [buildWikiPageViewModel, { ...wikiInput(), collectionId: "other" }],

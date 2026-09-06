@@ -50,20 +50,22 @@ hexo.extend.generator.register("notebooks", function (locals) {
     .slice();
   const orderedCollections = stableSort(collections, (left, right) => left.order - right.order);
 
-  // The index page of all notebooks.
-  routes.push({
-    path: generatorPath(profile.path),
-    layout: ["notebooks"],
-    data: {
-      layout: "notebooks",
-      navigation: toRenderNavigation(profile),
-      notebookIndex: deepFreeze({
-        mode: "collections",
-        items: orderedCollections,
-        recentItems: notebookIndex.recentItems
-      })
-    }
-  });
+  // The index page of all notebooks. A null path disables only this aggregate route.
+  if (profile.path != null) {
+    routes.push({
+      path: generatorPath(profile.path),
+      layout: ["notebooks"],
+      data: {
+        layout: "notebooks",
+        navigation: toRenderNavigation(profile),
+        notebookIndex: deepFreeze({
+          mode: "collections",
+          items: orderedCollections,
+          recentItems: notebookIndex.recentItems
+        })
+      }
+    });
+  }
 
   for (const notebook of notebookIndex.items) {
     // Note list pages (for every tag) of current notebook.

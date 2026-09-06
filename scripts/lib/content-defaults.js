@@ -37,8 +37,16 @@ function articleFooterDefaults(content) {
   };
 }
 
+function collectionFooterDefaults(content) {
+  return {
+    ...articleFooterDefaults(content),
+    share: []
+  };
+}
+
 module.exports = {
   articleFooterDefaults,
   articlePresentationDefaults,
+  collectionFooterDefaults,
   requireContentConfig
 };
