@@ -17,7 +17,7 @@ const { composeUiClasses } = require('../../lib/ui-capabilities')
 module.exports = ctx => function(args, content) {
   args = ctx.args.map(args, ['bg', 'w', 'c', 'gap', 'br'])
   if (args.w == null && args.c == null) {
-    args.w = '240px'
+    args.w = '280px'
   }
   var el = ''
   var cellClass = args.bg === 'card'
