@@ -15,6 +15,7 @@ var html = '<!DOCTYPE html>'
 html += `<html lang="${language}"${htmlAttributes}>`
 html += head
 html += `<body${pageAttributes}>`
+html += bodyBegin || ''
 html += siteBackground || ''
 html += cover || ''
 html += `<div class="site-shell" id="start" data-regions="${presentRegions.join(' ')}">`

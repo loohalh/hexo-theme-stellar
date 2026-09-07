@@ -618,10 +618,12 @@ function pageViewModelSchema(profile) {
     properties.render = object({
       document: object({
         language: field("string", { default: derived("page.lang", "page.language", "site.language"), example: "zh-CN", required: true }),
+        headBeginInject: field("string", { default: literal(""), example: "", required: true }),
         headEndInject: field("string", { default: literal(""), example: "", required: true }),
+        bodyBeginInject: field("string", { default: literal(""), example: "", required: true }),
         bodyEndInject: field("string", { default: literal(""), example: "", required: true }),
         preferredTheme: field("string", { default: derived("hexo.stellar.config.appearance.colorScheme"), example: "auto", required: true })
-      }, { required: true, example: { language: "zh-CN", headEndInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
+      }, { required: true, example: { language: "zh-CN", headBeginInject: "", headEndInject: "", bodyBeginInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
       layout: object({
         pageType: field("string", { default: literal("content"), example: "content", required: true }),
         articleStyle: field(["string", "null"], { default: inherited("item.presentation.article.style"), example: "tech", required: true }),
@@ -692,7 +694,7 @@ function pageViewModelSchema(profile) {
       }, { required: true, example: { href: "blog/hello", title: "Hello Stellar", layout: "post", date: null, cover: "", caption: "", excerpt: "", categories: [], categoryStyle: "", tags: [], authorId: "", priority: 0, listed: true, cardStyle: "classic" } })
     }, {
       default: computed(`由 ${profile === "topic" ? "Topic" : "Post"} PageViewModel 构建器生成`),
-      example: { document: { language: "zh-CN", headEndInject: "", bodyEndInject: "" }, layout: { pageType: "content" }, seo: { title: "Hello Stellar - Stellar" } },
+      example: { document: { language: "zh-CN", headBeginInject: "", headEndInject: "", bodyBeginInject: "", bodyEndInject: "" }, layout: { pageType: "content" }, seo: { title: "Hello Stellar - Stellar" } },
       required: true
     });
   }
@@ -761,10 +763,12 @@ function pageViewModelSchema(profile) {
     properties.render = object({
       document: object({
         language: field("string", { default: derived("page.lang", "page.language", "site.language"), example: "zh-CN", required: true }),
+        headBeginInject: field("string", { default: literal(""), example: "", required: true }),
         headEndInject: field("string", { default: literal(""), example: "", required: true }),
+        bodyBeginInject: field("string", { default: literal(""), example: "", required: true }),
         bodyEndInject: field("string", { default: literal(""), example: "", required: true }),
         preferredTheme: field("string", { default: derived("hexo.stellar.config.appearance.colorScheme"), example: "auto", required: true })
-      }, { required: true, example: { language: "zh-CN", headEndInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
+      }, { required: true, example: { language: "zh-CN", headBeginInject: "", headEndInject: "", bodyBeginInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
       layout: object({
         pageType: field("string", { default: literal("content"), example: "content", required: true }),
         articleStyle: field(["string", "null"], { default: inherited("item.presentation.article.style"), example: "tech", required: true }),
@@ -873,10 +877,12 @@ function pageViewModelSchema(profile) {
     properties.render = object({
       document: object({
         language: field("string", { default: derived("page.lang", "page.language", "site.language"), example: "zh-CN", required: true }),
+        headBeginInject: field("string", { default: literal(""), example: "", required: true }),
         headEndInject: field("string", { default: literal(""), example: "", required: true }),
+        bodyBeginInject: field("string", { default: literal(""), example: "", required: true }),
         bodyEndInject: field("string", { default: literal(""), example: "", required: true }),
         preferredTheme: field("string", { default: derived("appearance.colorScheme"), example: "auto", required: true })
-      }, { required: true, example: { language: "zh-CN", headEndInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
+      }, { required: true, example: { language: "zh-CN", headBeginInject: "", headEndInject: "", bodyBeginInject: "", bodyEndInject: "", preferredTheme: "auto" } }),
       layout: object({
         pageType: field("string", { default: literal("content"), example: "content", required: true }),
         articleStyle: field(["string", "null"], { default: inherited("item.presentation.article.style"), example: "tech", required: true }),

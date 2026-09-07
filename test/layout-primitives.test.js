@@ -59,6 +59,7 @@ test("Shell escapes document attributes while preserving trusted render slots", 
     documentModel: { language: 'zh-CN" data-x="1', preferredTheme: "dark" },
     pageModel: { pageType: "content", layout: "post", articleStyle: "tech", indent: false },
     head: "<head></head>",
+    bodyBegin: "<template id=\"body-begin\"></template>",
     siteBackground: "",
     cover: "",
     regions: { topbar: "", leftbar: "", rightbar: "" },
@@ -69,5 +70,7 @@ test("Shell escapes document attributes while preserving trusted render slots", 
   });
   assert.match(html, /lang="zh-CN&quot; data-x=&quot;1"/);
   assert.match(html, /<article>trusted<\/article>/);
+  assert.ok(html.indexOf('<body data-page-type="content"') < html.indexOf('<template id="body-begin">'));
+  assert.ok(html.indexOf('<template id="body-begin">') < html.indexOf('<article>trusted</article>'));
   assert.doesNotMatch(html, /<html lang="zh-CN" data-x="1"/);
 });

@@ -158,8 +158,8 @@ function preconnect() {
   return el;
 }
 
-function custom_inject() {
-  return stellar_inject('headEnd', pageRender ? pageRender.document.headEndInject : pageConfig.inject?.headEnd)
+function custom_inject(kind) {
+  return stellar_inject(kind, pageRender ? pageRender.document[`${kind}Inject`] : pageConfig.inject?.[kind])
 }
 
 function generate_canonical() {
@@ -182,6 +182,7 @@ function generate_canonical() {
 %>
 
 <head>
+  <%- custom_inject('headBegin') %>
   <meta charset="utf-8">
   <meta name="hexo-theme" content="<%- stellar_info('tree') %>" theme-name="<%- stellar_info('name') %>" theme-version="<%- stellar_info('version') %>">
   <%- generate_canonical() %>
@@ -247,7 +248,7 @@ function generate_canonical() {
   <% } %>
 
   <%- json_ld(pageViewModel || undefined) %>
-  <%- custom_inject() %>
+  <%- custom_inject('headEnd') %>
 
   <!-- icons.yml 驱动的 CSS 装饰图标 -->
   <%

@@ -931,7 +931,11 @@ structured_data:
 
 # 配置原样注入页面的可信内容。
 inject:
+  # 设置注入到 <head> 后的内容；空字符串表示不注入。
+  head_begin: ''
   # 设置注入到 </head> 前的内容；空字符串表示不注入。
   head_end: ''
+  # 设置注入到 <body> 后的内容；空字符串表示不注入。
+  body_begin: ''
   # 设置注入到 </body> 前的内容；空字符串表示不注入。
   body_end: ''

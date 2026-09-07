@@ -499,7 +499,9 @@ function buildPostRenderModel(input, collection, item) {
   return {
     document: {
       language: normalizeLanguage(page.lang, page.language, frontMatter.lang, frontMatter.language, siteConfig.language),
+      headBeginInject: normalizeInject(frontMatter.inject?.headBegin),
       headEndInject: normalizeInject(frontMatter.inject?.headEnd),
+      bodyBeginInject: normalizeInject(frontMatter.inject?.bodyBegin),
       bodyEndInject: normalizeInject(frontMatter.inject?.bodyEnd),
       preferredTheme: appearance.colorScheme === "auto"
         ? "auto"
@@ -690,7 +692,9 @@ function buildWikiRenderModel(input, collection, item) {
   return {
     document: {
       language,
+      headBeginInject: normalizeInject(frontMatter.inject?.headBegin),
       headEndInject: normalizeInject(frontMatter.inject?.headEnd),
+      bodyBeginInject: normalizeInject(frontMatter.inject?.bodyBegin),
       bodyEndInject: normalizeInject(frontMatter.inject?.bodyEnd),
       preferredTheme: appearance.colorScheme === "auto" ? "auto" : String(appearance.colorScheme || "")
     },

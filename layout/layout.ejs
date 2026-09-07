@@ -53,6 +53,7 @@ function shellDocument(options) {
     documentModel: options.documentModel,
     pageModel: options.pageModel,
     head: options.head,
+    bodyBegin: options.bodyBegin,
     siteBackground: options.siteBackground,
     cover: options.cover,
     regions: options.regions,
@@ -118,6 +119,7 @@ if (renderViewModel) {
       indent: render.layout.indent
     },
     head: partial('_partial/head', {viewModel: renderViewModel}),
+    bodyBegin: stellar_inject('bodyBegin', render.document.bodyBeginInject),
     siteBackground: siteBackground(render.layout.siteBackground),
     cover: coverSlot(renderViewModel),
     regions: {
@@ -187,6 +189,7 @@ if (renderViewModel) {
       indent: indent
     },
     head: partial('_partial/head'),
+    bodyBegin: stellar_inject('bodyBegin', pageConfig.inject?.bodyBegin),
     siteBackground: siteBackground(appearance.backgrounds.page.image),
     cover: coverSlot(),
     regions: {

@@ -188,14 +188,22 @@ test("Front Matter parser preserves Hexo fields and normalizes Stellar fields", 
     tagline: "Page tagline",
     render: { math: "katex" },
     seo: { open_graph: { image: "/cover.webp" } },
-    inject: { head_end: "<meta name=\"example\">" }
+    inject: {
+      head_begin: "<!-- head begin -->",
+      head_end: "<meta name=\"example\">",
+      body_begin: "<!-- body begin -->",
+      body_end: "<script>example()</script>"
+    }
   }, "source/wiki/docs/index.md");
   assert.equal(parsed.title, "Page");
   assert.deepEqual(parsed.collection, { profile: "wiki", id: "docs" });
   assert.equal(parsed.cover, "/page.webp");
   assert.equal(parsed.tagline, "Page tagline");
   assert.equal(parsed.seo.openGraph.image, "/cover.webp");
+  assert.equal(parsed.inject.headBegin, "<!-- head begin -->");
   assert.equal(parsed.inject.headEnd, "<meta name=\"example\">");
+  assert.equal(parsed.inject.bodyBegin, "<!-- body begin -->");
+  assert.equal(parsed.inject.bodyEnd, "<script>example()</script>");
   assert.equal(Object.isFrozen(parsed), true);
 });
 

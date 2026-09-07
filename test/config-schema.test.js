@@ -60,6 +60,25 @@ test("Theme config normalizes overrides without mutating open provider bags", ()
   assert.equal(config.canonical.host, null);
 });
 
+test("Theme config exposes all four trusted document injection positions", () => {
+  const inject = parseStellarConfig({
+    themeConfig: {
+      inject: {
+        head_begin: "<!-- head begin -->",
+        head_end: "<!-- head end -->",
+        body_begin: "<!-- body begin -->",
+        body_end: "<!-- body end -->"
+      }
+    }
+  }).inject;
+  assert.deepEqual(inject, {
+    headBegin: "<!-- head begin -->",
+    headEnd: "<!-- head end -->",
+    bodyBegin: "<!-- body begin -->",
+    bodyEnd: "<!-- body end -->"
+  });
+});
+
 test("Theme config rejects unknown, mistyped, and unsafe values with sourced issues", () => {
   assert.throws(
     () => parseStellarConfig({ source: "custom.yml", themeConfig: { unknown: true } }),

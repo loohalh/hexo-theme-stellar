@@ -278,7 +278,9 @@ const CONFIG_RULES = Object.freeze([
   ["services.github_card.provider", { values: ["github_readme_stats"] }],
   ["services.github_card.github_readme_stats", { runtimeKey: "github_readme_stats" }],
   ["services.*.*.endpoint", { validator: "absolute_http_url" }],
+  ["inject.head_begin", { normalizer: "trusted_text" }],
   ["inject.head_end", { normalizer: "trusted_text" }],
+  ["inject.body_begin", { normalizer: "trusted_text" }],
   ["inject.body_end", { normalizer: "trusted_text" }]
 ]);
 

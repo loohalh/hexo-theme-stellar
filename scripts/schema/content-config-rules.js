@@ -228,7 +228,9 @@ const FRONT_MATTER_TARGET_DEFINITIONS = [
   ["seo", "object", literal({}), { boundary: "sealed" }],
   ["seo.open_graph", "object", literal({}), { boundary: "parameter_bag" }],
   ["inject", "object", literal({}), { boundary: "sealed" }],
+  ["inject.head_begin", "string", literal("")],
   ["inject.head_end", "string", literal("")],
+  ["inject.body_begin", "string", literal("")],
   ["inject.body_end", "string", literal("")]
 ];
 

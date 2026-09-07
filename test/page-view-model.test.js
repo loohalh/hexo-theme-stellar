@@ -131,6 +131,34 @@ test("all PageViewModel profiles use the shared validated and frozen pipeline", 
   }
 });
 
+test("all PageViewModel profiles project the four document injection positions", () => {
+  const cases = [
+    [buildPostPageViewModel, postInput()],
+    [buildWikiPageViewModel, wikiInput()],
+    [buildTopicPageViewModel, topicInput()],
+    [buildNotebookPageViewModel, notebookInput()]
+  ];
+  for (const [build, input] of cases) {
+    input.frontMatter = parsePageConfig({
+      ...input.frontMatter,
+      inject: {
+        head_begin: "<!-- head begin -->",
+        head_end: "<!-- head end -->",
+        body_begin: "<!-- body begin -->",
+        body_end: "<!-- body end -->"
+      }
+    }, input.source);
+    assert.deepEqual(build(input).render.document, {
+      language: "zh-CN",
+      headBeginInject: "<!-- head begin -->",
+      headEndInject: "<!-- head end -->",
+      bodyBeginInject: "<!-- body begin -->",
+      bodyEndInject: "<!-- body end -->",
+      preferredTheme: "auto"
+    });
+  }
+});
+
 test("Wiki Hero projects registered effect presentation without changing public options", () => {
   const [definition] = heroEffectDefinitions();
   assert.ok(definition);
