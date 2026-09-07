@@ -37,7 +37,10 @@ search:
   provider: local
 
 inject:
+  head_begin: ''
   head_end: ''
+  body_begin: ''
+  body_end: ''
 ```
 
 配置加载器先读取主题 `_config.yml`，再应用站点覆盖。对象按字段合并，数组整体替换，因此 `rightbar.widgets: []`、`topbar.widgets: []` 和 `leftbar.widgets: []` 都能显式关闭默认项。解析结果会深度冻结到 `hexo.stellar.config`。
@@ -65,7 +68,9 @@ Provider ID 属于业务值，不会被改写，例如 `provider: site_info_api`
 
 顶层和普通对象保持封闭，未知字段会在构建早期报告结构化错误。第三方参数袋按规则开放并原样保留参数。Appearance 与 Inject 只接受当前子字段。
 
-升级诊断只面向最近公开版本 1.44.0：`logo/menubar/site_tree/notebook` 分别指向 `leftbar.brand/leftbar.menu/profiles/profiles.notebook`，`tag_plugins/data_services/plugins/style` 分别指向 `tags/services/features/appearance`，`dependencies/default/api_host` 分别指向 `features.lazy_loading`、`fallbacks/profiles.error.image`、`services.github/services.github_card`。`stellar/data_cache/system` 三个内部策略根直接删除。这些字段仍会被拒绝，诊断只提供人工迁移目标，不别名、双读或自动改写。v2 预发布候选中出现过的分组路径、`regions` 包装和其它中间字段统一按未知字段处理，不保留专用墓碑。
+从 1.44.0 升级到 v2 时，`logo/menubar/site_tree/notebook` 分别指向 `leftbar.brand/leftbar.menu/profiles/profiles.notebook`，`tag_plugins/data_services/plugins/style` 分别指向 `tags/services/features/appearance`，`dependencies/default/api_host` 分别指向 `features.lazy_loading`、`fallbacks/profiles.error.image`、`services.github/services.github_card`。`stellar/data_cache/system` 三个内部策略根直接删除。这些字段仍会被拒绝，诊断只提供人工迁移目标，不别名、双读或自动改写。
+
+`2.0.0-rc.2` 相对公开候选 `2.0.0-rc.1` 进一步收敛 Profile：顶层 `notebook` 移到 `profiles.notebook`，`settings.about` 移到 `profiles.settings.about`，`error_page.image` 移到 `profiles.error.image`；`profiles.notebook_index` 更名为 `profiles.notebooks`，`profiles.note_index` 更名为 `profiles.notebook`，`profiles.note` 仍表示 Note 内容页。这些 RC1 字段不会被别名、双读或自动转换。未公开候选中出现过的其它中间字段统一按未知字段处理，不保留专用墓碑。
 
 `null` 只有在规则明确允许时才保留业务语义，例如 `search.provider: null` 表示关闭搜索。其它空键视为没有覆盖，继续使用默认值。
 

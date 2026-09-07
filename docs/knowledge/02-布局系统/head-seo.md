@@ -393,22 +393,29 @@ head 模板包含 DNS 预取控制：
 
 ## 自定义注入系统
 
-`stellar_inject()` 组合两个可信注入来源：
+`stellar_inject()` 为四个文档位置分别组合两个可信注入来源：
 
 ```mermaid
 graph TD
-    START["stellar_inject('headEnd')"] --> SITEINJECT["frozen inject.headEnd string"]
-    SITEINJECT --> PAGEINJECT["current page inject.headEnd"]
+    START["stellar_inject(kind)"] --> SITEINJECT["frozen site inject[kind] string"]
+    SITEINJECT --> PAGEINJECT["current page inject[kind]"]
     PAGEINJECT --> CONCAT["site text + one inserted newline + page text"]
-    CONCAT --> OUTPUT["Output raw HTML to <head>"]
+    CONCAT --> OUTPUT["Output raw HTML at the selected document position"]
 ```
 
-**优先级：**
+| YAML 字段 | 内部键 | 输出位置 |
+| --- | --- | --- |
+| `inject.head_begin` | `headBegin` | `<head>` 后、主题 meta 前 |
+| `inject.head_end` | `headEnd` | `</head>` 前 |
+| `inject.body_begin` | `bodyBegin` | `<body>` 后、页面外壳前 |
+| `inject.body_end` | `bodyEnd` | `</body>` 前 |
 
-1. 主题默认或站点覆盖的 `inject.head_end` 多行字符串
-2. 页面 Front Matter 的 `inject.head_end` 多行字符串
+**合并顺序：**
 
-不读取 Hexo `_config.yml.inject`。两段原文均不解析、不格式化；仅在两段都非空时插入一个换行。页尾脚本使用相同规则组合 `inject.body_end`，内部 camelCase 键为 `bodyEnd`。
+1. 站点主题覆盖中对应位置的多行字符串
+2. 页面 Front Matter 中对应位置的多行字符串
+
+不读取 Hexo `_config.yml.inject`。两段原文均不解析、不格式化；仅在两段都非空时插入一个换行。四个位置都按相同规则处理，内部使用 camelCase 键。
 
 无需修改主题模板即可注入自定义 meta、分析脚本或 CSS。
 
@@ -501,12 +508,15 @@ preconnect:
 
 ### 站点主题覆盖（_config.stellar.yml）
 
-`inject` 只允许出现在站点主题覆盖与页面 Front Matter，不属于主题默认输入：
+`inject` 只允许出现在站点主题覆盖与页面 Front Matter：
 
 ```yaml
 inject:
-  head: |
+  head_begin: ''
+  head_end: |
     <meta name="custom" content="value">
+  body_begin: ''
+  body_end: ''
 ```
 
 ### 页面 Front-Matter
@@ -521,10 +531,12 @@ open_graph:
   type: article
   image: /image.jpg
 inject:
-  head:
-    - '<link rel="alternate" href="/page.xml" type="application/rss+xml">'
+  head_end: '<link rel="alternate" href="/page.xml" type="application/rss+xml">'
+  body_end: '<script>console.log("trusted page code")</script>'
 ---
 ```
+
+四个字段都必须是字符串，不接受数组。内容作为可信 HTML 原样输出，只应配置维护者完全信任的内容。
 
 **参考源码**：[layout/_partial/head.ejs](../../../layout/_partial/head.ejs)
 

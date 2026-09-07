@@ -37,7 +37,7 @@ Stellar 是一个功能全面的 Hexo 主题，内置四套并行内容管理系
 
 Stellar 采用**五层架构**，把配置、数据处理、渲染、客户端行为与样式分离，使主题可以支持多种内容类型并保持一致性，同时允许深度定制。
 
-主题是**配置驱动**的：[_config.yml](../../../_config.yml) 镜像 Schema 默认值，站点可通过 `_config.stellar.yml` 覆盖；该文件缺失或为空时仍可直接构建。v2 声明式 Schema 已交付并封闭 `brand`、`menu`、`profiles`、`article`、`notebook`、`appearance`、`canonical`、`preconnect`、`search`、`comments`、`tags`、`features`、`services` 和 `inject` 等根配置。
+主题是**配置驱动**的：[_config.yml](../../../_config.yml) 镜像 Schema 默认值，站点可通过 `_config.stellar.yml` 覆盖；该文件缺失或为空时仍可直接构建。v2 声明式 Schema 已交付并封闭 `topbar`、`leftbar`、`rightbar`、`footer`、`profiles`、`article`、`appearance`、`search`、`comments`、`tags`、`features`、`services`、`preconnect`、`fallbacks`、`canonical`、`open_graph`、`structured_data` 和 `inject` 共 18 个根配置。
 
 ### 核心架构分层
 

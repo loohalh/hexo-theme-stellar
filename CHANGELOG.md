@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.0.0-rc.2
+
+> 发布日期：2026-09-07
+
+本节记录从公开候选 `2.0.0-rc.1` 到 `2.0.0-rc.2` 最终文件树的净变化。
+
+### 新功能
+
+- Notebook 列表、设置页与错误页的专属配置统一收敛到 `profiles`；404 页新增默认关闭的评论区，可独立覆盖标题、线程、Provider 与参数。
+- 可信页面注入补全 `head_begin/head_end/body_begin/body_end` 四个位置，站点主题配置与页面 Front Matter 使用同一合并顺序和原样输出语义。
+
+### 修复与工程变化
+
+- 将 `hexo-front-matter` 声明为主题直接依赖，避免源码配置与 `stellar new note` 依赖 Hexo 宿主的传递依赖。
+- 重构中英文 README，明确 npm、源码与 Blueprint 三种安装入口，并补充随 npm 包分发的 Stellar 图标、项目描述、关键词和作者元数据。
+
+### 升级注意（配置变更与破坏性改动）
+
+- 从 RC1 升级时，将顶层 `notebook` 移到 `profiles.notebook`，将 `settings.about` 移到 `profiles.settings.about`，将 `error_page.image` 移到 `profiles.error.image`。
+- `profiles.notebook_index` 更名为 `profiles.notebooks`，`profiles.note_index` 更名为 `profiles.notebook`；Note 内容页继续使用 `profiles.note`。
+- `inject` 内容会作为可信 HTML 原样输出；只应配置维护者完全信任的内容，站点级内容在前、页面 Front Matter 在后。
+
+Full Changelog: [2.0.0-rc.1...2.0.0-rc.2](https://github.com/xaoxuu/hexo-theme-stellar/compare/2.0.0-rc.1...2.0.0-rc.2)
+
 ## 2.0.0-rc.1
 
 > 发布日期：2026-09-07
