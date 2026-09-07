@@ -133,7 +133,7 @@ footer:
   # 设置主内容区页脚导航分栏；空数组表示不显示分栏。
   sections: []
 
-# 配置各页面类型的路由、导航和 Region 默认值；省略字段时继承站点级 Region。
+# 配置各页面与内容 Profile 的专属设置、路由、导航和 Region 默认值；省略字段时继承站点级 Region。
 profiles:
   # 配置主页默认布局。
   home:
@@ -265,8 +265,37 @@ profiles:
         - ghrepo
         - toc
 
+  # 配置单个 Notebook Collection 与列表页。
+  notebook:
+    # 设置 Notebook 列表页高亮的主菜单项；null 表示不高亮。
+    active_menu: null
+    # 配置 Notebook 列表页 Leftbar 覆盖项。
+    leftbar:
+      # 设置 Notebook 列表页 Leftbar 内容 Widget；数组会整体替换站点级列表。
+      widgets:
+        - tagtree
+        - recent
+    # 配置 Notebook 列表页 Rightbar 覆盖项。
+    rightbar:
+      # 设置 Notebook 列表页 Rightbar Widget；空数组表示显式隐藏。
+      widgets: []
+    # 配置 Notebook 条目列表。
+    listing:
+      # 设置每页条目数；null 表示继承站点分页配置，0 表示禁用分页。
+      per_page: null
+      # 配置 Notebook 条目排序。
+      sort:
+        # 设置排序字段；可选值为 date、updated 或 title。
+        field: updated
+        # 设置排序方向；可选值为 asc 或 desc。
+        direction: desc
+      # 设置没有 excerpt 和 description 时的自动摘要最大字符数；0 表示不自动生成摘要。
+      excerpt_length: 128
+    # 配置 Notebook 标签对应的图标；空对象表示不指定图标。
+    tag_icons: {}
+
   # 配置 Notebook 总索引页默认布局。
-  notebook_index:
+  notebooks:
     # 设置 Notebook 总索引页的自动生成路径；null 表示不生成总索引页。
     path: /notebooks/
     # 设置 Notebook 总索引页高亮的主菜单项；null 表示不高亮。
@@ -279,21 +308,6 @@ profiles:
     # 配置 Notebook 总索引页 Rightbar 覆盖项。
     rightbar:
       # 设置 Notebook 总索引页 Rightbar Widget；空数组表示显式隐藏。
-      widgets: []
-
-  # 配置 Notebook 列表页默认布局。
-  note_index:
-    # 设置 Notebook 列表页高亮的主菜单项；null 表示不高亮。
-    active_menu: null
-    # 配置 Notebook 列表页 Leftbar 覆盖项。
-    leftbar:
-      # 设置 Notebook 列表页 Leftbar 内容 Widget；数组会整体替换站点级列表。
-      widgets:
-        - tagtree
-        - recent
-    # 配置 Notebook 列表页 Rightbar 覆盖项。
-    rightbar:
-      # 设置 Notebook 列表页 Rightbar Widget；空数组表示显式隐藏。
       widgets: []
 
   # 配置 Notebook 内容页默认布局。
@@ -347,6 +361,22 @@ profiles:
   settings:
     # 设置设置页的生成路径。
     path: /settings/
+    # 配置设置页的关于信息。
+    about:
+      # 设置关于信息条目；数组会整体替换。
+      items:
+        # 设置条目名称。
+        - key: 博客框架
+          # 设置条目内容，支持主题模板变量。
+          value: Hexo {hexo.version}
+          # 设置条目链接。
+          url: https://hexo.io/
+        # 设置条目名称。
+        - key: 主题版本
+          # 设置条目内容，支持主题模板变量。
+          value: Stellar {theme.version}
+          # 设置条目链接，支持主题模板变量。
+          url: '{theme.tree}'
     # 设置设置页高亮的主菜单项；null 表示不高亮。
     active_menu: null
     # 配置设置页 Leftbar 覆盖项。
@@ -363,6 +393,20 @@ profiles:
   error:
     # 设置错误页的生成路径。
     path: /404.html
+    # 设置错误页插图地址；null 表示不显示插图。
+    image: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
+    # 配置错误页评论区。
+    comments:
+      # 控制是否显示错误页评论区。
+      enabled: false
+      # 设置错误页评论区标题；null 表示使用默认标题。
+      title: null
+      # 设置错误页评论线程标识；null 表示由页面上下文决定。
+      id: null
+      # 设置错误页专用评论 Provider；null 表示使用全局 Provider。
+      provider: null
+      # 设置错误页专用评论 Provider 参数；空对象表示不覆盖参数。
+      options: {}
     # 设置错误页高亮的主菜单项；null 表示不高亮。
     active_menu: post
     # 配置错误页 Leftbar 覆盖项。
@@ -426,42 +470,6 @@ article:
       - system
     # 控制文章页页脚是否显示标签。
     show_tags: true
-
-# 配置 Notebook 列表与内容页的展示行为。
-notebook:
-  # 配置 Notebook 列表。
-  listing:
-    # 设置每页条目数；null 表示继承站点分页配置，0 表示禁用分页。
-    per_page: null
-    # 配置 Notebook 条目排序。
-    sort:
-      # 设置排序字段；可选值为 date、updated 或 title。
-      field: updated
-      # 设置排序方向；可选值为 asc 或 desc。
-      direction: desc
-    # 设置没有 excerpt 和 description 时的自动摘要最大字符数；0 表示不自动生成摘要。
-    excerpt_length: 128
-  # 配置 Notebook 标签对应的图标；空对象表示不指定图标。
-  tag_icons: {}
-
-# 配置设置页内容。
-settings:
-  # 配置设置页的关于信息。
-  about:
-    # 设置关于信息条目；数组会整体替换。
-    items:
-      # 设置条目名称。
-      - key: 博客框架
-        # 设置条目内容，支持主题模板变量。
-        value: Hexo {hexo.version}
-        # 设置条目链接。
-        url: https://hexo.io/
-      # 设置条目名称。
-      - key: 主题版本
-        # 设置条目内容，支持主题模板变量。
-        value: Stellar {theme.version}
-        # 设置条目链接，支持主题模板变量。
-        url: '{theme.tree}'
 
 # -----------------------------------------------------------------------------
 # 外观
@@ -892,11 +900,6 @@ fallbacks:
   link_card: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/link/8f277b4ee0ecd.svg
   # 设置封面占位图地址。
   cover: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg
-
-# 配置错误页资源。
-error_page:
-  # 设置错误页插图地址；null 表示不显示插图。
-  image: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
 
 # -----------------------------------------------------------------------------
 # SEO

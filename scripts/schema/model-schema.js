@@ -452,12 +452,12 @@ function collectionSchema(profile) {
           cardStyle: field(["string", "null"], { default: inherited("hexo.stellar.config.article.listing.cardLayout"), example: "hero", required: true })
         } : {}),
         excerptLength: field(["number", "null"], {
-          default: profile === "notebook" ? inherited("hexo.stellar.config.notebook.listing.excerptLength") : literal(null),
+          default: profile === "notebook" ? inherited("hexo.stellar.config.profiles.notebook.listing.excerptLength") : literal(null),
           example: 128,
           required: true
         }),
         perPage: field(["number", "null"], {
-          default: profile === "notebook" ? inherited("hexo.stellar.config.notebook.listing.perPage", "site.per_page") : literal(null),
+          default: profile === "notebook" ? inherited("hexo.stellar.config.profiles.notebook.listing.perPage", "site.per_page") : literal(null),
           example: 10,
           required: true
         }),
@@ -465,7 +465,7 @@ function collectionSchema(profile) {
           sort: object({
             field: field("string", { default: profile === "topic" ? literal("date") : literal("updated"), example: "updated", required: true }),
             direction: field("string", { default: literal("desc"), example: "desc", required: true })
-          }, { default: derived("collection.listing.sort", "hexo.stellar.config.notebook.listing.sort"), example: { field: "updated", direction: "desc" }, required: true })
+          }, { default: derived("collection.listing.sort", "hexo.stellar.config.profiles.notebook.listing.sort"), example: { field: "updated", direction: "desc" }, required: true })
         })
       };
 
@@ -882,7 +882,7 @@ function pageViewModelSchema(profile) {
         articleStyle: field(["string", "null"], { default: inherited("item.presentation.article.style"), example: "tech", required: true }),
         indent: field("boolean", { default: computed("由 article.paragraphIndent 与 style 解析"), example: false, required: true }),
         siteBackground: field("boolean", { default: derived("appearance.backgrounds.page.image"), example: false, required: true }),
-        notebookIndexPath: field("string", { default: derived("hexo.stellar.config.profiles.notebookIndex.path"), example: "notebooks", required: true }),
+        notebookIndexPath: field("string", { default: derived("hexo.stellar.config.profiles.notebooks.path"), example: "notebooks", required: true }),
         notebookPath: field("string", { default: inherited("collection.route.baseDir"), example: "notes/dev", required: true }),
         algoliaFilterPath: field("string", { default: inherited("collection.route.baseDir"), example: "notes/dev", required: true }),
         ...renderRegionsSchema(factory),

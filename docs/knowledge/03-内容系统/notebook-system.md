@@ -105,9 +105,9 @@ footer:
 - `visibility` 作为 Note 的默认可见性；Page Front Matter 可再覆盖。`listed: false` 同时隐藏总索引中的 Notebook 卡片，但不删除该 Notebook 的路由。
 - `active_menu` 按 Page → Collection → Profile 级联；Region 按 Page → Collection → Profile → 全局级联。Article、Footer、Comments 分别从对应主题默认值进入 Collection → Page。
 - 未声明 `leftbar.brand` 时，主题从 Notebook 的 `name/tagline/icon/route` 生成 Leftbar Brand；显式 Profile、Collection 或 Page Brand 仍可局部覆盖或设为 `false`。
-- `notebook.tag_icons` 只在实际标签匹配时提供图标；未使用或已过期的键被忽略，不会使构建失败。
+- `profiles.notebook.tag_icons` 只在实际标签匹配时提供图标；未使用或已过期的键被忽略，不会使构建失败。
 
-`profiles.notebook_index.path` 控制“全部笔记本”总索引路由；设为 `null` 时不生成该总索引，同时 Note 页的 Brand 返回按钮和面包屑也不链接它。各 Notebook 的集合首页、标签页和 Note 详情路由仍正常生成。
+`profiles.notebooks.path` 控制“全部笔记本”总索引路由；设为 `null` 时不生成该总索引，同时 Note 页的 Brand 返回按钮和面包屑也不链接它。各 Notebook 的集合首页、标签页和 Note 详情路由仍正常生成。
 
 ## Note Front Matter
 

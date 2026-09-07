@@ -19,7 +19,8 @@ const LEGACY_THEME_ROOTS = Object.freeze({
   data_cache: null,
   plugins: "features",
   style: "appearance",
-  default: "fallbacks | error_page",
+  notebook: "profiles.notebook",
+  default: "fallbacks | profiles.error.image",
   api_host: "services.github | services.github_card",
   system: null
 });

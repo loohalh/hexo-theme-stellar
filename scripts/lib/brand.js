@@ -21,8 +21,8 @@ function shouldShowMobileBrand({ profileKey }) {
     "home",
     "blogIndex",
     "wikiIndex",
-    "notebookIndex",
-    "noteIndex"
+    "notebooks",
+    "notebook"
   ].includes(profileKey);
 }
 

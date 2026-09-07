@@ -108,7 +108,7 @@ test("Notebook generator projects collection ownership through notebookIndex", (
       items: Object.freeze([notebook]),
       recentItems: Object.freeze([note])
     })
-  }, { profiles: { notebook_index: { path: null } } }), {});
+  }, { profiles: { notebooks: { path: null } } }), {});
   assert.equal(noIndexRoutes.some(route => route.layout?.includes("notebooks")), false);
   assert.equal(noIndexRoutes.some(route => route.layout?.includes("notes")), true);
 });

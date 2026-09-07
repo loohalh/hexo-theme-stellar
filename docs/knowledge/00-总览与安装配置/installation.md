@@ -122,9 +122,9 @@ your-hexo-site/
 
 ```text
 topbar, leftbar, rightbar, footer, profiles,
-article, notebook, settings, appearance,
+article, appearance,
 search, comments, tags, features, services,
-preconnect, fallbacks, error_page,
+preconnect, fallbacks,
 canonical, open_graph, structured_data, inject
 ```
 

@@ -12,7 +12,7 @@ const { selectListingItems, stableSort } = require("../lib/collection-pipeline/s
 hexo.extend.generator.register("notebooks", function (locals) {
   const { notebookIndex } = hexo.stellar.data;
   const profiles = requireLayoutProfiles(hexo.stellar?.config);
-  const profile = profiles.notebookIndex;
+  const profile = profiles.notebooks;
   if (!notebookIndex?.items || notebookIndex.items.length === 0) {
     return [];
   }
@@ -79,7 +79,7 @@ hexo.extend.generator.register("notebooks", function (locals) {
         layout: ["notes"],
         data: {
           layout: "notes",
-          navigation: { menu: notebook.navigation.menu ?? profiles.noteIndex.activeMenu }
+          navigation: { menu: notebook.navigation.menu ?? profiles.notebook.activeMenu }
         }
       });
       for (const slice of slices) {

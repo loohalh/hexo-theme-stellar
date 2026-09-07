@@ -2,7 +2,7 @@
 page.robots = 'noindex,nofollow'
 var provider = stellar_config('comments.provider') || ''
 var providerSupported = ['artalk', 'waline', 'twikoo'].includes(String(provider).toLowerCase())
-var settingsConfig = stellar_config('settings') || {}
+var settingsConfig = stellar_config('profiles.settings') || {}
 var aboutItems = settingsConfig.about?.items || []
 var cacheItems = [
   { id: 'search', label: __('settings.cache.search') },

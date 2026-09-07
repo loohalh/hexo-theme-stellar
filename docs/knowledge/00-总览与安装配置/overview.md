@@ -198,7 +198,7 @@ Stellar 支持四套并行内容系统，各有独立的页面类型与导航模
 | **博客** | `blog_index` | `post` | 分类、标签、分页、相关文章 |
 | **文档（Wiki）** | `wiki_index` | `wiki` | Collection 树、小节、层级导航 |
 | **专栏（Topic）** | Collection 列表 | `topic` | 系列文章、沉浸式阅读 |
-| **笔记本** | `notebook_index` → `note_index` | `note` | 标签树导航、轻量笔记 |
+| **笔记本** | `notebooks` → `notebook` | `note` | 标签树导航、轻量笔记 |
 
 ```mermaid
 graph TB
@@ -221,8 +221,8 @@ graph TB
     end
     
     subgraph NotebookSystem["Notebook System"]
-        NBLIST["notebook_index profile<br/>Notebook list"]
-        NOTELIST["note_index profile<br/>Note list"]
+        NBLIST["notebooks profile<br/>Notebook catalog"]
+        NOTELIST["notebook profile<br/>Note list"]
         NOTEPAGE["note profile<br/>Individual note"]
     end
     

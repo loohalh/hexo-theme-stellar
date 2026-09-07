@@ -15,6 +15,10 @@ var runtimeHomeComments = stellar_config('profiles.home.comments')
 if (!runtimeViewModel && runtimeHomeComments && runtimeHomeComments !== false && is_home_first_page()) {
   runtimeCommentOverrides = typeof runtimeHomeComments === 'object' ? runtimeHomeComments : {enabled: true}
 }
+var runtimeErrorComments = stellar_config('profiles.error.comments')
+if (!runtimeViewModel && page.layout === '404' && runtimeErrorComments && runtimeErrorComments !== false) {
+  runtimeCommentOverrides = typeof runtimeErrorComments === 'object' ? runtimeErrorComments : {enabled: true}
+}
 var runtimeComments = runtimeViewModel?.render?.article?.comments || comments_model(page, runtimeCommentOverrides)
 var runtimeProfile = runtimeViewModel?.collection?.profile
   || (page.notebookIndex?.mode === 'notes' ? 'notebook' : page.layout || '')

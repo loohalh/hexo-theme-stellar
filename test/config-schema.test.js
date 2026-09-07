@@ -27,10 +27,13 @@ test("Theme config loads complete frozen defaults", () => {
   }
   assert.equal(config.topbar.enabled, false);
   assert.equal(config.rightbar.enabled, true);
+  assert.match(config.profiles.error.image, /^https:\/\//);
+  assert.equal(config.profiles.error.comments.enabled, false);
+  assert.equal(config.profiles.settings.about.items.length, 2);
   assert.equal(config.topbar.brand.style, undefined);
   assert.equal(config.leftbar.brand.style, "regular");
   assert.deepEqual(config.article.footer.share, SHARE_SERVICE_IDS);
-  assert.equal(config.notebook.footer, undefined);
+  assert.equal(config.profiles.notebook.footer, undefined);
   assertDeepFrozen(config);
 });
 
@@ -39,6 +42,7 @@ test("Theme config normalizes overrides without mutating open provider bags", ()
     source: "_config.stellar.yml",
     themeConfig: {
       preconnect: ["https://cdn.example.com"],
+      profiles: { error: { image: null, comments: { enabled: true, provider: "giscus" } } },
       article: { listing: { excerpt_length: 42 } },
       comments: {
         provider: "giscus",
@@ -48,6 +52,9 @@ test("Theme config normalizes overrides without mutating open provider bags", ()
     }
   });
   assert.deepEqual(config.preconnect, ["https://cdn.example.com"]);
+  assert.equal(config.profiles.error.image, null);
+  assert.equal(config.profiles.error.comments.enabled, true);
+  assert.equal(config.profiles.error.comments.provider, "giscus");
   assert.equal(config.article.listing.excerptLength, 42);
   assert.deepEqual(config.comments.giscus.nested_option, { enabled: true });
   assert.equal(config.canonical.host, null);
@@ -84,7 +91,8 @@ test("Theme config rejects 1.44 roots with current migration targets", () => {
     data_cache: null,
     plugins: "features",
     style: "appearance",
-    default: "fallbacks | error_page",
+    notebook: "profiles.notebook",
+    default: "fallbacks | profiles.error.image",
     api_host: "services.github | services.github_card",
     system: null
   };

@@ -1059,7 +1059,7 @@ function notebookBaseDir(collectionId, collectionConfig, stellarConfig) {
   if (typeof collectionConfig.route?.path === "string" && collectionConfig.route.path.length > 0) {
     return normalizeCollectionPath(collectionConfig.route.path);
   }
-  const root = profilePath(requireLayoutProfiles(stellarConfig).notebookIndex.path);
+  const root = profilePath(requireLayoutProfiles(stellarConfig).notebooks.path);
   return normalizeCollectionPath([root, collectionId].filter(Boolean).join("/"));
 }
 
@@ -1098,11 +1098,11 @@ function buildNotebookCollectionModel(input, collectionId) {
   const defaultListing = notebookDefaults.listing;
   const baseDir = notebookBaseDir(collectionId, collectionConfig, input.stellarConfig);
   const identity = normalizeCollectionIdentity(collectionConfig);
-  const profileNavigation = toRenderNavigation(profiles.noteIndex);
+  const profileNavigation = toRenderNavigation(profiles.notebook);
   const collectionNavigation = toContentNavigation(collectionConfig);
   const collectionRegions = pick(collectionConfig, CONTENT_MODEL_FIELDS.regionIds);
   const defaultBrand = collectionBrand(identity, baseDir, {
-    indexPath: profiles.notebookIndex.path,
+    indexPath: profiles.notebooks.path,
     backLabel: "btn.all_notebook"
   });
   assertCollectionBrandConfig(collectionConfig, "collection", input.collectionSource || "<collection>");
@@ -1218,7 +1218,7 @@ function buildNotebookRenderModel(input, collection, item) {
       articleStyle: core.layout.articleStyle,
       indent: core.layout.indent,
       siteBackground: core.layout.siteBackground,
-      notebookIndexPath: profilePath(requireLayoutProfiles(input.stellarConfig).notebookIndex.path),
+      notebookIndexPath: profilePath(requireLayoutProfiles(input.stellarConfig).notebooks.path),
       notebookPath: collection.route.baseDir,
       algoliaFilterPath: collection.route.baseDir,
       topbar: core.layout.topbar,

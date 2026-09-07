@@ -177,7 +177,7 @@ const CONTRIBUTIONS = defineContributions([
     tests: [RUNTIME_TEST, RUNTIME_CONSUMPTION_TEST],
     defaultsOwner: CONFIG_OWNER("comments.provider"),
     project(context) {
-      if (typeof context.comments.service !== "string" || context.comments.service.length === 0) return null;
+      if (context.comments.enabled !== true || typeof context.comments.service !== "string" || context.comments.service.length === 0) return null;
       return configResult({
         provider: context.comments.service,
         options: context.comments.options || {},

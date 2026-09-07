@@ -59,6 +59,17 @@ test("Runtime Manifest serialization is safe for inline script data", () => {
   assert.match(json, /\\u003c\/script\\u003e/);
 });
 
+test("Runtime Manifest only registers comments when the resolved model is enabled", () => {
+  const disabled = buildBrowserRuntimeManifest(fixture({
+    comments: { enabled: false, service: "giscus" }
+  }));
+  const enabled = buildBrowserRuntimeManifest(fixture({
+    comments: { enabled: true, service: "giscus" }
+  }));
+  assert.equal(disabled.extensions.some(extension => extension.id === "comments"), false);
+  assert.equal(enabled.extensions.some(extension => extension.id === "comments"), true);
+});
+
 test("Runtime browser assets use conventional .js filenames", () => {
   const files = runtimeFiles(RUNTIME_SOURCE);
   assert.ok(files.length > 0);

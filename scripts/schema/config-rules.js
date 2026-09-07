@@ -152,7 +152,6 @@ const inheritedRegionBrand = properties => ({
 });
 
 const CONFIG_RULES = Object.freeze([
-  ["settings.about.items", { items: aboutItem }],
   ["footer.sections", { items: footerSection }],
   ["footer.content", { normalizer: "trusted_text" }],
 
@@ -182,10 +181,12 @@ const CONFIG_RULES = Object.freeze([
   ["profiles.*.rightbar.enabled", { type: ["boolean", "null"], defaultValue: null }],
   ["profiles.*.rightbar.widgets", { type: ["array", "null"], defaultValue: null, items: widgetItems }],
   ["profiles.*.listing_nav.tabs", { validator: "navigation_tabs", items: navigationTab }],
-  ["profiles.home.comments.title", { type: ["string", "null"] }],
-  ["profiles.home.comments.id", { type: ["string", "null"], normalizer: "nullable_trimmed_string", validator: "nullable_non_empty_string" }],
-  ["profiles.home.comments.provider", { type: ["string", "null"], values: [null, "beaudar", "utterances", "giscus", "twikoo", "waline", "artalk"] }],
-  ["profiles.home.comments.options", parameterBag],
+  ["profiles.error.image", { type: ["string", "null"], validator: "nullable_resource" }],
+  ["profiles.settings.about.items", { items: aboutItem }],
+  ["profiles.*.comments.title", { type: ["string", "null"] }],
+  ["profiles.*.comments.id", { type: ["string", "null"], normalizer: "nullable_trimmed_string", validator: "nullable_non_empty_string" }],
+  ["profiles.*.comments.provider", { type: ["string", "null"], values: [null, "beaudar", "utterances", "giscus", "twikoo", "waline", "artalk"] }],
+  ["profiles.*.comments.options", parameterBag],
 
   ["article.style", { values: ["tech", "story"] }],
   ["article.paragraph_indent", { values: ["auto", "always", "never"] }],
@@ -198,11 +199,11 @@ const CONFIG_RULES = Object.freeze([
   ["article.footer.license", { type: ["boolean", "string"], validator: "license_value" }],
   ["article.footer.share", { items: item("string", { defaultValue: "", values: SHARE_SERVICE_IDS }), normalizer: "trimmed_string_list" }],
   ["article.related_posts_limit", { minimum: 0, validator: "non_negative_integer" }],
-  ["notebook.listing.excerpt_length", { minimum: 0, validator: "non_negative_integer" }],
-  ["notebook.listing.per_page", { type: ["number", "null"], minimum: 0, validator: "nullable_non_negative_integer" }],
-  ["notebook.listing.sort.field", { values: ["date", "updated", "title"] }],
-  ["notebook.listing.sort.direction", { values: ["asc", "desc"] }],
-  ["notebook.tag_icons", { ...stringRecord(), validator: "non_empty_record_keys" }],
+  ["profiles.notebook.listing.excerpt_length", { minimum: 0, validator: "non_negative_integer" }],
+  ["profiles.notebook.listing.per_page", { type: ["number", "null"], minimum: 0, validator: "nullable_non_negative_integer" }],
+  ["profiles.notebook.listing.sort.field", { values: ["date", "updated", "title"] }],
+  ["profiles.notebook.listing.sort.direction", { values: ["asc", "desc"] }],
+  ["profiles.notebook.tag_icons", { ...stringRecord(), validator: "non_empty_record_keys" }],
 
   ["appearance.preset", { values: ["card", "glass", "minimal", "flat"] }],
   ["appearance.color_scheme", { values: ["auto", "light", "dark"] }],
@@ -231,7 +232,6 @@ const CONFIG_RULES = Object.freeze([
   ["structured_data.same_as", { items: item("string", { defaultValue: "" }), normalizer: "trimmed_string_list" }],
   ["preconnect", { items: item("string", { defaultValue: "" }), normalizer: "origin_list" }],
   ["fallbacks.*", { validator: "resource" }],
-  ["error_page.image", { type: ["string", "null"], validator: "nullable_resource" }],
 
   ["search.provider", { type: ["string", "null"], values: [null, "local", "algolia"] }],
   ["search.local.cache_ttl_seconds", { minimum: 0, validator: "non_negative_integer" }],

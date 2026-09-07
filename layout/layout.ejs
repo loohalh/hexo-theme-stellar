@@ -148,9 +148,9 @@ if (renderViewModel) {
   if (is_home()) {
     profileKey = 'home'
   } else if (page.layout === 'notebooks') {
-    profileKey = 'notebookIndex'
+    profileKey = 'notebooks'
   } else if (page.layout === 'notes') {
-    profileKey = 'noteIndex'
+    profileKey = 'notebook'
     collectionRegions = notebookIndex?.layout
   } else if (is_category() || is_tag() || is_archive() || ['categories', 'tags', 'archives'].includes(page.layout)) {
     profileKey = 'blogIndex'
